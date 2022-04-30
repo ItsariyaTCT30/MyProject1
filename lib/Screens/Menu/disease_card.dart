@@ -1,0 +1,629 @@
+import 'package:flutter/material.dart';
+
+class ProductCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // It  will provide us total height and width of our screen
+    Size size = MediaQuery.of(context).size;
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 20.0 / 2,
+          ),
+          // color: Colors.blueAccent,
+          height: 160,
+          child: InkWell(
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                // Those are our background
+                Container(
+                  height: 136,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(22),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 15),
+                        blurRadius: 27,
+                        color: Colors.black12, // Black color with 12% opacity
+                      )
+                    ],
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(22),
+                    ),
+                  ),
+                ),
+                // our product image
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    height: 160,
+                    // image is square but we add extra 20 + 20 padding thats why width is 200
+                    width: 200,
+                    child: Image.asset(
+                      "asset/image/circulatory.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+
+                // Product title and price
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: SizedBox(
+                    height: 136,
+                    // our image take 200 width, thats why we set out total width - 200
+                    width: size.width - 200,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Text(
+                            "ระบบไหลเวียนโลหิต",
+                            style: Theme.of(context).textTheme.button,
+                          ),
+                        ),
+                        // it use the available space
+                        Spacer(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 20.0 / 2,
+          ),
+          // color: Colors.blueAccent,
+          height: 160,
+          child: InkWell(
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                // Those are our background
+                Container(
+                  height: 136,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(22),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 15),
+                        blurRadius: 27,
+                        color: Colors.black12, // Black color with 12% opacity
+                      )
+                    ],
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(22),
+                    ),
+                  ),
+                ),
+                // our product image
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    height: 160,
+                    // image is square but we add extra 20 + 20 padding thats why width is 200
+                    width: 200,
+                    child: Image.asset(
+                      "asset/image/guts1.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+
+                // Product title and price
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: SizedBox(
+                    height: 136,
+                    // our image take 200 width, thats why we set out total width - 200
+                    width: size.width - 200,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Text(
+                            "ระบบทางเดินอาหาร",
+                            style: Theme.of(context).textTheme.button,
+                          ),
+                        ),
+                        // it use the available space
+                        Spacer(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 20.0 / 2,
+          ),
+          // color: Colors.blueAccent,
+          height: 160,
+          child: InkWell(
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                // Those are our background
+                Container(
+                  height: 136,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(22),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 15),
+                        blurRadius: 27,
+                        color: Colors.black12, // Black color with 12% opacity
+                      )
+                    ],
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(22),
+                    ),
+                  ),
+                ),
+                // our product image
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    height: 160,
+                    // image is square but we add extra 20 + 20 padding thats why width is 200
+                    width: 200,
+                    child: Image.asset(
+                      "asset/image/patient1.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+
+                // Product title and price
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: SizedBox(
+                    height: 136,
+                    // our image take 200 width, thats why we set out total width - 200
+                    width: size.width - 200,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Text(
+                            "แก้ไข้",
+                            style: Theme.of(context).textTheme.button,
+                          ),
+                        ),
+                        // it use the available space
+                        Spacer(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 20.0 / 2,
+          ),
+          // color: Colors.blueAccent,
+          height: 160,
+          child: InkWell(
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                // Those are our background
+                Container(
+                  height: 136,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(22),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 15),
+                        blurRadius: 27,
+                        color: Colors.black12, // Black color with 12% opacity
+                      )
+                    ],
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(22),
+                    ),
+                  ),
+                ),
+                // our product image
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    height: 160,
+                    // image is square but we add extra 20 + 20 padding thats why width is 200
+                    width: 200,
+                    child: Image.asset(
+                      "asset/image/contagious.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+
+                // Product title and price
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: SizedBox(
+                    height: 136,
+                    // our image take 200 width, thats why we set out total width - 200
+                    width: size.width - 200,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Text(
+                            "โรคติดต่อ",
+                            style: Theme.of(context).textTheme.button,
+                          ),
+                        ),
+                        // it use the available space
+                        Spacer(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 20.0 / 2,
+          ),
+          // color: Colors.blueAccent,
+          height: 160,
+          child: InkWell(
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                // Those are our background
+                Container(
+                  height: 136,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(22),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 15),
+                        blurRadius: 27,
+                        color: Colors.black12, // Black color with 12% opacity
+                      )
+                    ],
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(22),
+                    ),
+                  ),
+                ),
+                // our product image
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    height: 160,
+                    // image is square but we add extra 20 + 20 padding thats why width is 200
+                    width: 200,
+                    child: Image.asset(
+                      "asset/image/pain1.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+
+                // Product title and price
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: SizedBox(
+                    height: 136,
+                    // our image take 200 width, thats why we set out total width - 200
+                    width: size.width - 200,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Text(
+                            "อาการทางกล้ามเนื้อ",
+                            style: Theme.of(context).textTheme.button,
+                          ),
+                        ),
+                        // it use the available space
+                        Spacer(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 20.0 / 2,
+          ),
+          // color: Colors.blueAccent,
+          height: 160,
+          child: InkWell(
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                // Those are our background
+                Container(
+                  height: 136,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(22),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 15),
+                        blurRadius: 27,
+                        color: Colors.black12, // Black color with 12% opacity
+                      )
+                    ],
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(22),
+                    ),
+                  ),
+                ),
+                // our product image
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    height: 160,
+                    // image is square but we add extra 20 + 20 padding thats why width is 200
+                    width: 200,
+                    child: Image.asset(
+                      "asset/image/dental-care.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+
+                // Product title and price
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: SizedBox(
+                    height: 136,
+                    // our image take 200 width, thats why we set out total width - 200
+                    width: size.width - 200,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Text(
+                            "ฟัน",
+                            style: Theme.of(context).textTheme.button,
+                          ),
+                        ),
+                        // it use the available space
+                        Spacer(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 20.0 / 2,
+          ),
+          // color: Colors.blueAccent,
+          height: 160,
+          child: InkWell(
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                // Those are our background
+                Container(
+                  height: 136,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(22),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 15),
+                        blurRadius: 27,
+                        color: Colors.black12, // Black color with 12% opacity
+                      )
+                    ],
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(22),
+                    ),
+                  ),
+                ),
+                // our product image
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    height: 160,
+                    // image is square but we add extra 20 + 20 padding thats why width is 200
+                    width: 200,
+                    child: Image.asset(
+                      "asset/image/snake1.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+
+                // Product title and price
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: SizedBox(
+                    height: 136,
+                    // our image take 200 width, thats why we set out total width - 200
+                    width: size.width - 200,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Text(
+                            "แก้พิษ",
+                            style: Theme.of(context).textTheme.button,
+                          ),
+                        ),
+                        // it use the available space
+                        Spacer(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 20.0 / 2,
+          ),
+          // color: Colors.blueAccent,
+          height: 160,
+          child: InkWell(
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                // Those are our background
+                Container(
+                  height: 136,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(22),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 15),
+                        blurRadius: 27,
+                        color: Colors.black12, // Black color with 12% opacity
+                      )
+                    ],
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(22),
+                    ),
+                  ),
+                ),
+                // our product image
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    height: 160,
+                    // image is square but we add extra 20 + 20 padding thats why width is 200
+                    width: 200,
+                    child: Image.asset(
+                      "asset/image/rash1.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+
+                // Product title and price
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: SizedBox(
+                    height: 136,
+                    // our image take 200 width, thats why we set out total width - 200
+                    width: size.width - 200,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Text(
+                            "อาการทางผิวหนัง",
+                            style: Theme.of(context).textTheme.button,
+                          ),
+                        ),
+                        // it use the available space
+                        Spacer(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
