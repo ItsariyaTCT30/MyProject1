@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:favorite_button/favorite_button.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:login_logout_app/Screens/admin/model/test.dart';
 import 'package:login_logout_app/Screens/com.dart';
 import 'package:login_logout_app/Screens/menu.dart';
 import 'package:rating_dialog/rating_dialog.dart';
@@ -29,6 +33,166 @@ class MethodScreens extends StatefulWidget {
 class _MethodScreensState extends State<MethodScreens> {
   double rating = 0;
 
+  String? SName, OName, IName, MName;
+  final formKey = GlobalKey<FormState>();
+  var file;
+  final picker = ImagePicker();
+  String? fileSName;
+  String? fileOName;
+  String? fileIName;
+  String? fileMName;
+
+  ListResult? result;
+  List<Reference>? allFiles;
+  String? fileUrl;
+  FullMetadata? fileMeta;
+
+  //ประกาศตัวแปรอ้างอิงไปยัง Child ที่ต้องการ
+
+  final sdbfirebase = FirebaseDatabase.instance.reference().child('comment');
+
+  Future<void> createData(SName, OName, IName, MName) async {
+    // if (file != null) {
+    try {
+      await sdbfirebase.push().set({
+        'sName': SName,
+        'oName': OName,
+        'iName': IName,
+        'mName': MName,
+      }).then((value) {
+        formKey.currentState!.reset();
+        file = null;
+        print("Success");
+      }).catchError((onError) {
+        print(onError.code);
+        print(onError.message);
+      });
+      final snackBar = SnackBar(content: Text('เพิ่มสำเร็จ'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      print(fileSName);
+      print(fileOName);
+      print(fileIName);
+      setState(() {});
+    } on FirebaseException catch (error) {
+      print(error);
+    }
+    // }
+  }
+
+  //Function สำหรับแก้ไขข้อมูล
+  Future<void> updateData(String key, int amonth, String op) async {
+    try {
+      if (op == "add") {
+        sdbfirebase.child(key).update({
+          'amonth': amonth + 1,
+        }).then((value) {
+          print('Success');
+        }).catchError((onError) {
+          print(onError.code);
+          print(onError.message);
+        });
+      } else if (op == "sub") {
+        sdbfirebase.child(key).update({
+          'amonth': amonth - 1,
+        }).then((value) {
+          print('Success');
+        }).catchError((onError) {
+          print(onError.code);
+          print(onError.message);
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //-------------------------------------------------------------------------------
+/*
+  Future<void> orderN() async {
+    var db = FirebaseDatabase.instance.reference().child("comment");
+    db.once().then((DataSnapshot snapshot) async {
+      Map<dynamic, dynamic> values = snapshot.value;
+      //print(values.toString());
+      values.forEach((k, v) async {
+        print(k);
+        //print(v["amonth"]);
+        if (v["amonth"] > 0) {
+          await FirebaseDatabase.instance
+              .reference()
+              .child('Order')
+              // .child(widget.tableName)
+              .push()
+              .set({
+            //  'tableN': widget.tableName,
+            'sName': v["sName"],
+            'oName': v["oName"],
+          }).then((value) {
+            print("Update Success");
+            sdbfirebase.child(k).update({
+              'amonth': 0,
+            }).then((value) {
+              print('Success');
+            }).catchError((onError) {
+              print(onError.code);
+              print(onError.message);
+            });
+          }).catchError((onError) {
+            print(onError.code);
+            print(onError.message);
+          });
+          //
+        }
+      });
+      //  await _order(widget.tableName);
+    });
+  }*/
+  //-------------------------------------------------------------------------------
+  final hdbfirebase = FirebaseDatabase.instance.reference().child('Food');
+
+  Future<void> orderN() async {
+    var db = FirebaseDatabase.instance.reference().child("Food");
+    db.once().then((DataSnapshot snapshot) async {
+      Map<dynamic, dynamic> values = snapshot.value;
+      //print(values.toString());
+      values.forEach((k, v) async {
+        print(k);
+        //print(v["amonth"]);
+        if (v["amonth"] > 0) {
+          await FirebaseDatabase.instance
+              .reference()
+              .child('Order')
+              // .child(widget.tableName)
+              .push()
+              .set({
+            //  'tableN': widget.tableName,
+            'tName': v["tName"],
+            'eName': v["eName"],
+            'hName': v["hName"],
+            'dName': v["dName"],
+            'imgURL': v["imgURL"],
+            'amonth': v["amonth"],
+          }).then((value) {
+            print("Update Success");
+            hdbfirebase.child(k).update({
+              'amonth': 0,
+            }).then((value) {
+              print('Success');
+            }).catchError((onError) {
+              print(onError.code);
+              print(onError.message);
+            });
+          }).catchError((onError) {
+            print(onError.code);
+            print(onError.message);
+          });
+          //
+        }
+      });
+      //  await _order(widget.tableName);
+    });
+  }
+
+  //-------------------------------------------------------------------------------
   // show the rating dialog
   void _showRatingDialog() {
     // actual store listing review & rating
@@ -73,6 +237,15 @@ class _MethodScreensState extends State<MethodScreens> {
       onCancelled: () => print('cancelled'),
       onSubmitted: (response) {
         print('rating: ${response.rating}, comment: ${response.comment}');
+        SName = '${response.rating}';
+        OName = '${response.comment}';
+
+        createData(
+          SName,
+          OName,
+          (IName = widget.imgURL),
+          (MName = widget.name),
+        );
 
         // TODO: add your own logic
         if (response.rating < 3.0) {
@@ -96,15 +269,25 @@ class _MethodScreensState extends State<MethodScreens> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: gColor,
-        title: Text(
-          "วิธีปรุงยาสมุนไพร",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+          backgroundColor: gColor,
+          title: Text(
+            "วิธีปรุงยาสมุนไพร",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-      ),
+          actions: [
+            IconButton(
+                icon: Icon(Icons.star_rounded),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (contex) => Com(),
+                    ),
+                  );
+                })
+          ]),
       body: Stack(
         children: <Widget>[
           ListView(
@@ -148,7 +331,7 @@ class _MethodScreensState extends State<MethodScreens> {
                 ),
               ),
               SizedBox(height: 20.0),
-              ElevatedButton.icon(
+              /* ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                   primary: gColor,
                   fixedSize: const Size(50, 50),
@@ -164,30 +347,32 @@ class _MethodScreensState extends State<MethodScreens> {
                   style: TextStyle(fontSize: 18, color: sColor),
                 ),
                 onPressed: _showRatingDialog,
-              ),
+              ),*/
+              /*  ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    primary: gColor,
+                    fixedSize: const Size(50, 50),
+                    shape: StadiumBorder(),
+                  ),
+                  icon: Icon(
+                    Icons.comment,
+                    color: sColor,
+                    size: 20,
+                  ),
+                  label: Text(
+                    '',
+                    style: TextStyle(fontSize: 18, color: sColor),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (contex) => MyApp(),
+                      ),
+                    );
+                  }),*/
+
               SizedBox(height: 10.0),
               //buildProductList(),
-              Center(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                    Text(
-                      'Rating: $rating',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    const SizedBox(height: 10),
-                    RatingBar.builder(
-                      minRating: 1,
-                      itemSize: 46,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 4),
-                      itemBuilder: (context, _) =>
-                          Icon(Icons.star, color: Colors.amber),
-                      updateOnDrag: true,
-                      onRatingUpdate: (rating) => setState(() {
-                        this.rating = rating;
-                      }),
-                    ),
-                  ])),
 
               SizedBox(height: 10.0),
               Row(
@@ -209,13 +394,7 @@ class _MethodScreensState extends State<MethodScreens> {
                       'Comment',
                       style: TextStyle(fontSize: 18, color: sColor),
                     ),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (contex) => Com(),
-                        ),
-                      );
-                    },
+                    onPressed: _showRatingDialog,
                   ),
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(

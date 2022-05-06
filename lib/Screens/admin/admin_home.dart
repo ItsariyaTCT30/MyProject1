@@ -5,6 +5,7 @@ import 'package:login_logout_app/Screens/Index.dart';
 import 'package:login_logout_app/Screens/admin/backend/admin_data.dart';
 import 'package:login_logout_app/Screens/admin/model/add_h.dart';
 import 'package:login_logout_app/Screens/admin/model/edit_h.dart';
+import 'package:login_logout_app/Screens/admin/model/test.dart';
 import 'package:login_logout_app/constants.dart';
 
 class MainMenu extends StatefulWidget {
@@ -102,6 +103,27 @@ class _MainMenuState extends State<MainMenu> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (contex) => EditH(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.edit,
+                size: 32,
+                color: Colors.orange[900],
+              ),
+              title: const Text(
+                'test',
+                style: TextStyle(
+                  color: gColor,
+                  fontSize: 28,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (contex) => MyApp(),
                   ),
                 );
               },

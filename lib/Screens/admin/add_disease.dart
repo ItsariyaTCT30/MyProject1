@@ -51,7 +51,10 @@ class _AddDiseaseState extends State<AddDisease> {
 
   //กำหนดค่าเริ่มต้นสำหรับการส่งข้อมูลไปที่ Realtime Firebase
   final dbfirebase = FirebaseDatabase.instance.reference().child('Disease');
-  final dbffirebase = FirebaseDatabase.instance.reference().child('Food');
+
+  get hdbfirebase => FirebaseDatabase.instance.reference().child('Food');
+
+  String myPet = '';
 
   // Select and image from the gallery or take a picture with the camera
   // Then upload to Firebase Storage
@@ -210,6 +213,7 @@ class _AddDiseaseState extends State<AddDisease> {
                       ),
                       txtTTTName(),
                       txtName(),
+                      // txtTTName(),
                       Center(
                         child: file == null
                             ? Text('ไม่มีรูปภาพ')
@@ -233,9 +237,25 @@ class _AddDiseaseState extends State<AddDisease> {
                 //-----------------------------------------------------
                 Expanded(
                   child: FirebaseAnimatedList(
-                    query: dbfirebase,
+                    query: hdbfirebase,
                     itemBuilder: (context, snapshot, animation, index) {
-                      return Container(
+                      return /*Container(
+                        child: Column(
+                          children: [
+                            RadioListTile(
+                              value: '${snapshot.value['tName']}',
+                              groupValue: myPet,
+                              onChanged: (value) {
+                                setState(() {
+                                  myPet = value.toString();
+                                });
+                              },
+                              title: Text('${snapshot.value['tName']}'),
+                            ),
+                          ],
+                        ),
+                      );*/
+                          Container(
                         //height: 100,
                         child: Padding(
                           padding: EdgeInsets.all(3.0),
@@ -263,7 +283,7 @@ class _AddDiseaseState extends State<AddDisease> {
                                         padding:
                                             const EdgeInsets.only(left: 8.0),
                                         child: Text(
-                                          '${snapshot.value['type']}',
+                                          '${snapshot.value['eName']}',
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -271,6 +291,27 @@ class _AddDiseaseState extends State<AddDisease> {
                                         ),
                                       ),
                                     ),
+                                  ),
+                                ],
+                              ),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  /* RadioListTile(
+                                    value: 'dog',
+                                    groupValue: myPet,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        myPet = value.toString();
+                                      });
+                                    },
+                                  )*/
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.add_box,
+                                      color: Colors.red,
+                                    ),
+                                    onPressed: () {},
                                   ),
                                 ],
                               ),

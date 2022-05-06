@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:favorite_button/favorite_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:login_logout_app/Screens/Herb_Control.dart';
 import 'package:login_logout_app/Screens/Index.dart';
 import 'package:login_logout_app/Screens/Menu/data.dart';
@@ -15,6 +19,8 @@ import 'package:login_logout_app/Screens/admin/backend/admin_data.dart';
 import 'package:login_logout_app/Screens/components/Herb_Details_Screens.dart';
 import 'package:login_logout_app/Screens/index_home.dart';
 import 'package:login_logout_app/constants.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:path/path.dart' as path;
 
 class Herb extends StatefulWidget {
   const Herb({Key? key}) : super(key: key);
@@ -27,6 +33,7 @@ class _HerbState extends State<Herb> {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+  final _saved = Set<_HerbState>();
 
   String email = 'lemail';
   String password = 'lpassword';
@@ -36,14 +43,63 @@ class _HerbState extends State<Herb> {
     await _firebaseAuth.signOut();
   }
 
-  List<MenuRecom> menuRecom = getMenuRecomList();
+  FirebaseStorage storage = FirebaseStorage.instance;
+  String? fName, fEName, fDName, fHName, fimgURL;
+  final formKey = GlobalKey<FormState>();
+  var file;
+  final picker = ImagePicker();
+  File? fimageFile;
+  String? filefName;
+  String? filefEName;
+  String? filefDName;
+  String? filefHName;
+
+  ListResult? result;
+  List<Reference>? allFiles;
+  String? fileUrl;
+  FullMetadata? fileMeta;
+
   //ประกาศตัวแปรอ้างอิงไปยัง Child ที่ต้องการ
-  final dbfirebase = FirebaseDatabase.instance.reference().child('Food');
+
+  final fdbfirebase = FirebaseDatabase.instance.reference().child('favorite');
+
+  Future<void> createData(fimgURL, fName, fEName, fDName, fHName) async {
+    // if (file != null) {
+    try {
+      await fdbfirebase.push().set({
+        'ftName': fName,
+        'feName': fEName,
+        'fdName': fDName,
+        'fhName': fHName,
+        'fimgURL': fimgURL,
+        'amonth': 0,
+      }).then((value) {
+        formKey.currentState!.reset();
+        file = null;
+        print("Success");
+      }).catchError((onError) {
+        print(onError.code);
+        print(onError.message);
+      });
+      final snackBar = SnackBar(content: Text('เพิ่มสำเร็จ'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      print(filefName);
+      print(filefEName);
+      print(filefDName);
+      print(filefHName);
+      print(fimageFile);
+      setState(() {});
+    } on FirebaseException catch (error) {
+      print(error);
+    }
+    // }
+  }
+
   //Function สำหรับแก้ไขข้อมูล
   Future<void> updateData(String key, int amonth, String op) async {
     try {
       if (op == "add") {
-        dbfirebase.child(key).update({
+        fdbfirebase.child(key).update({
           'amonth': amonth + 1,
         }).then((value) {
           print('Success');
@@ -52,7 +108,7 @@ class _HerbState extends State<Herb> {
           print(onError.message);
         });
       } else if (op == "sub") {
-        dbfirebase.child(key).update({
+        fdbfirebase.child(key).update({
           'amonth': amonth - 1,
         }).then((value) {
           print('Success');
@@ -65,6 +121,9 @@ class _HerbState extends State<Herb> {
       print(e);
     }
   }
+
+//-----------------------------------------------------------------------------------------------
+  final hdbfirebase = FirebaseDatabase.instance.reference().child('Food');
 
   Future<void> orderN() async {
     var db = FirebaseDatabase.instance.reference().child("Food");
@@ -90,7 +149,7 @@ class _HerbState extends State<Herb> {
             'amonth': v["amonth"],
           }).then((value) {
             print("Update Success");
-            dbfirebase.child(k).update({
+            hdbfirebase.child(k).update({
               'amonth': 0,
             }).then((value) {
               print('Success');
@@ -278,207 +337,212 @@ class _HerbState extends State<Herb> {
               fit: BoxFit.fitWidth,
             ),
           ),
-          Container(
-            padding: EdgeInsets.only(left: 20, right: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //    crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      'สมุนไพร',
-                      style: TextStyle(
-                          fontSize: 35,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      'Herb',
-                      style: TextStyle(
-                          fontSize: 35,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xffffffff).withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Form(
+            key: formKey,
+            child: Container(
+              padding: EdgeInsets.only(left: 20, right: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //    crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Column(
                     children: <Widget>[
-                      Container(
-                        width: 200,
-                        padding: EdgeInsets.only(left: 20),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                              hintStyle: TextStyle(color: Colors.white),
-                              hintText: 'Search',
-                              border: InputBorder.none),
-                        ),
+                      SizedBox(
+                        height: 15,
                       ),
-                      IconButton(
-                          icon: Icon(
-                            Icons.search,
+                      Text(
+                        'สมุนไพร',
+                        style: TextStyle(
+                            fontSize: 35,
                             color: Colors.white,
-                          ),
-                          onPressed: null)
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        'Herb',
+                        style: TextStyle(
+                            fontSize: 35,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                Expanded(
-                  flex: 12,
-                  child: FirebaseAnimatedList(
-                    query: dbfirebase,
-                    itemBuilder: (context, snapshot, animation, index) {
-                      return /*Container(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                        child: Card(
-                          margin: EdgeInsets.all(5),
-                          elevation: 5,
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              radius: 29,
-                              backgroundImage:
-                                  NetworkImage('${snapshot.value['imgURL']}'),
-                              //backgroundColor: pColor,
-                            ),
-                            title: Text(
-                              '${snapshot.value['tName']}',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xffffffff).withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Container(
+                          width: 200,
+                          padding: EdgeInsets.only(left: 20),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                hintStyle: TextStyle(color: Colors.white),
+                                hintText: 'Search',
+                                border: InputBorder.none),
                           ),
                         ),
-                      ),
-                    );*/ //Control(),
-                          Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => DetailsScreens(
-                                    imgURL: snapshot.value['imgURL'],
-                                    name: snapshot.value['tName'],
-                                    ename: snapshot.value['eName'],
-                                    dname: snapshot.value['dName'],
-                                    hname: snapshot.value['hName'],
+                        IconButton(
+                            icon: Icon(
+                              Icons.search,
+                              color: Colors.white,
+                            ),
+                            onPressed: null),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Expanded(
+                    flex: 12,
+                    child: FirebaseAnimatedList(
+                      query: hdbfirebase,
+                      itemBuilder: (context, snapshot, animation, index) {
+                        return //Control(),
+                            Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => DetailsScreens(
+                                      imgURL: snapshot.value['imgURL'],
+                                      name: snapshot.value['tName'],
+                                      ename: snapshot.value['eName'],
+                                      dname: snapshot.value['dName'],
+                                      hname: snapshot.value['hName'],
+                                    ),
                                   ),
+                                );
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                  bottomRight: Radius.circular(10),
+                                  bottomLeft: Radius.circular(50),
                                 ),
-                              );
-                            },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                                bottomRight: Radius.circular(10),
-                                bottomLeft: Radius.circular(50),
-                              ),
-                              child: Container(
-                                height: 170,
-                                color: Colors.grey,
-                                child: Stack(
-                                  children: <Widget>[
-                                    Align(
-                                      child: Image.network(
-                                        ('${snapshot.value['imgURL']}'),
-                                        width: 400,
-                                        fit: BoxFit.fitWidth,
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.topRight,
-                                      child: FavoriteButton(
-                                        isFavorite: false, iconSize: 40,
-
-                                        // iconDisabledColor: Colors.white,
-                                        valueChanged: (_isFavorite) {
-                                          print('Is Favorite : $_isFavorite');
-                                        },
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: IconButton(
-                                          icon: Icon(Icons.favorite,
-                                              color: Colors.red),
-                                          onPressed: null),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 20, bottom: 15, top: 10),
-                                      child: Align(
-                                        alignment: Alignment.bottomLeft,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Text(
-                                              '${snapshot.value['tName']}',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 30,
-                                                  color: sColor),
-                                            ),
-                                            Row(
-                                              children: <Widget>[
-                                                CircleAvatar(
-                                                  radius: 10,
-                                                  backgroundImage: AssetImage(
-                                                      'asset/image/123321.jpg'),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0),
-                                                  child: Text(
-                                                    '${snapshot.value['eName']}',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: sColor),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ],
+                                child: Container(
+                                  height: 170,
+                                  color: Colors.grey,
+                                  child: Stack(
+                                    children: <Widget>[
+                                      Align(
+                                        child: Image.network(
+                                          ('${snapshot.value['imgURL']}'),
+                                          width: 400,
+                                          fit: BoxFit.fitWidth,
                                         ),
                                       ),
-                                    )
-                                  ],
+                                      /* Align(
+                                        alignment: Alignment.topLeft,
+                                        child: FavoriteButton(
+                                          isFavorite: false, iconSize: 40,
+
+                                          // iconDisabledColor: Colors.white,
+                                          valueChanged: (_isFavorite) {
+                                            print('Is Favorite : $_isFavorite');
+                                          },
+                                        ),
+                                      ),*/
+                                      //-------------------------------------------
+
+                                      //---------------------------------------
+                                      Align(
+                                        alignment: Alignment.topRight,
+                                        child: IconButton(
+                                          icon: Icon(Icons.favorite,
+                                              color: Colors.red),
+                                          iconSize: 30,
+                                          onPressed: () {
+                                            fimgURL = snapshot.value['imgURL'];
+                                            fName = snapshot.value['tName'];
+                                            fEName = snapshot.value['eName'];
+                                            fDName = snapshot.value['dName'];
+                                            fHName = snapshot.value['hName'];
+
+                                            createData(fimgURL, fName, fEName,
+                                                fDName, fHName);
+                                            print(fimgURL);
+                                            print(fName);
+                                            print(fEName);
+                                            print(fDName);
+                                            print(fHName);
+                                          },
+                                        ),
+                                      ),
+                                      /*Align(
+                                        alignment: Alignment.topRight,
+                                        child: IconButton(
+                                            icon: Icon(Icons.favorite,
+                                                color: Colors.red),
+                                            onPressed: null),
+                                      ),*/
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 20, bottom: 15, top: 10),
+                                        child: Align(
+                                          alignment: Alignment.bottomLeft,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text(
+                                                '${snapshot.value['tName']}',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 30,
+                                                    color: sColor),
+                                              ),
+                                              Row(
+                                                children: <Widget>[
+                                                  /*  CircleAvatar(
+                                                    radius: 10,
+                                                    backgroundImage: AssetImage(
+                                                        'asset/image/123321.jpg'),
+                                                  ),*/
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 8.0),
+                                                    child: Text(
+                                                      '${snapshot.value['eName']}',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: sColor),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                        ],
-                      );
-                    },
+                            SizedBox(
+                              height: 15,
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ]),

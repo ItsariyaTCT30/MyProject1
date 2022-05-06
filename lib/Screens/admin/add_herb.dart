@@ -37,7 +37,7 @@ class _AddFoodState extends State<AddFood> {
   FullMetadata? fileMeta;
 
   //กำหนดค่าเริ่มต้นสำหรับการส่งข้อมูลไปที่ Realtime Firebase
-  final dbfirebase = FirebaseDatabase.instance.reference().child('Food');
+  final hdbfirebase = FirebaseDatabase.instance.reference().child('Food');
 
   // Select and image from the gallery or take a picture with the camera
   // Then upload to Firebase Storage
@@ -68,7 +68,7 @@ class _AddFoodState extends State<AddFood> {
             await storage.ref().child("Image/$name").putFile(file);
         if (snapshot.state == TaskState.success) {
           final String downloadUrl = await snapshot.ref.getDownloadURL();
-          await dbfirebase.push().set({
+          await hdbfirebase.push().set({
             'tName': name,
             'eName': Ename,
             'dName': Dname,
@@ -234,7 +234,7 @@ class _AddFoodState extends State<AddFood> {
                 ),
                 Expanded(
                   child: FirebaseAnimatedList(
-                    query: dbfirebase,
+                    query: hdbfirebase,
                     itemBuilder: (context, snapshot, animation, index) {
                       return Container(
                         //height: 100,

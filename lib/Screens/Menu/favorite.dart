@@ -1,6 +1,10 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:login_logout_app/Screens/Herb_Control.dart';
 import 'package:login_logout_app/Screens/Menu2.dart';
+import 'package:login_logout_app/Screens/components/Herb_Details_Screens.dart';
 
 import '../../constants.dart';
 
@@ -12,6 +16,55 @@ class favorite extends StatefulWidget {
 }
 
 class _favoriteState extends State<favorite> {
+  final fdbfirebase = FirebaseDatabase.instance.reference().child('favorite');
+
+  Future<void> _delete(String ref) async {
+    await FirebaseStorage.instance.refFromURL(ref).delete();
+  }
+
+  Future<void> orderN() async {
+    var db = FirebaseDatabase.instance.reference().child("favorite");
+    db.once().then((DataSnapshot snapshot) async {
+      Map<dynamic, dynamic> values = snapshot.value;
+      //print(values.toString());
+      values.forEach((k, v) async {
+        print(k);
+        //print(v["amonth"]);
+        if (v["amonth"] > 0) {
+          await FirebaseDatabase.instance
+              .reference()
+              .child('Order')
+              // .child(widget.tableName)
+              .push()
+              .set({
+            //  'tableN': widget.tableName,
+            'ftName': v["ftName"],
+            'feName': v["feName"],
+            'fhName': v["fhName"],
+            'fdName': v["fdName"],
+            'fimgURL': v["fimgURL"],
+            'amonth': v["amonth"],
+          }).then((value) {
+            print("Update Success");
+            fdbfirebase.child(k).update({
+              'amonth': 0,
+            }).then((value) {
+              print('Success');
+            }).catchError((onError) {
+              print(onError.code);
+              print(onError.message);
+            });
+          }).catchError((onError) {
+            print(onError.code);
+            print(onError.message);
+          });
+          //
+        }
+      });
+      //  await _order(widget.tableName);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +104,9 @@ class _favoriteState extends State<favorite> {
               children: <Widget>[
                 Column(
                   children: <Widget>[
+                    SizedBox(
+                      width: 25,
+                    ),
                     Text(
                       'สิ่งที่ฉันถูกใจ',
                       style: TextStyle(
@@ -58,20 +114,18 @@ class _favoriteState extends State<favorite> {
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
                     ),
-                    Text(
-                      'Herb',
-                      style: TextStyle(
-                          fontSize: 35,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                    SizedBox(
+                      width: 25,
                     ),
                   ],
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height / 1.7,
-                  child: ListView(
-                    children: <Widget>[
-                      Card(
+
+                Expanded(
+                  flex: 12,
+                  child: FirebaseAnimatedList(
+                    query: fdbfirebase,
+                    itemBuilder: (context, snapshot, animation, index) {
+                      return Card(
                         child: Container(
                           height: 100,
                           color: Colors.white,
@@ -81,7 +135,9 @@ class _favoriteState extends State<favorite> {
                                 child: Padding(
                                   padding: EdgeInsets.all(10),
                                   child: Expanded(
-                                    child: Image.asset("asset/image/herb.jpg"),
+                                    child: Image.network(
+                                      ('${snapshot.value['fimgURL']}'),
+                                    ),
                                     flex: 2,
                                   ),
                                 ),
@@ -94,8 +150,52 @@ class _favoriteState extends State<favorite> {
                                       Expanded(
                                         flex: 5,
                                         child: ListTile(
-                                          title: Text("กัญชา"),
-                                          subtitle: Text("Cannabis indica"),
+                                          title: Text(
+                                            '${snapshot.value['ftName']}',
+                                          ),
+                                          subtitle: Row(
+                                            children: <Widget>[
+                                              Flexible(
+                                                child: Container(
+                                                  child: Padding(
+                                                    padding:
+                                                        new EdgeInsets.only(
+                                                            right: 13.0),
+                                                    child: Text(
+                                                      '${snapshot.value['feName']}',
+                                                      /* style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),*/
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          trailing: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              IconButton(
+                                                icon: Icon(
+                                                  Icons.favorite_border,
+                                                  color: Colors.red,
+                                                ),
+                                                onPressed: () {
+                                                  _showMyDialog(
+                                                    snapshot.key,
+                                                    '${snapshot.value['fimgURL']}',
+                                                  );
+                                                  //dbfirebase.child(snapshot.key!).remove();
+                                                },
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       Expanded(
@@ -107,24 +207,29 @@ class _favoriteState extends State<favorite> {
                                             TextButton(
                                               child: Text("รายละเอียด"),
                                               onPressed: () {
-                                                Navigator.of(context).push(
+                                                Navigator.push(
+                                                  context,
                                                   MaterialPageRoute(
-                                                    builder: (contex) =>
-                                                        Control(),
+                                                    builder: (_) =>
+                                                        DetailsScreens(
+                                                      imgURL: snapshot
+                                                          .value['fimgURL'],
+                                                      name: snapshot
+                                                          .value['ftName'],
+                                                      ename: snapshot
+                                                          .value['feName'],
+                                                      dname: snapshot
+                                                          .value['fdName'],
+                                                      hname: snapshot
+                                                          .value['fhName'],
+                                                    ),
                                                   ),
                                                 );
                                               },
                                             ),
                                             SizedBox(
-                                              width: 8,
+                                              width: 15,
                                             ),
-                                            /*   TextButton(
-                                  child: Text("วิธีการปรุง"),
-                                  onPressed: () {},
-                                ),*/
-                                            SizedBox(
-                                              width: 8,
-                                            )
                                           ],
                                         ),
                                       )
@@ -139,378 +244,78 @@ class _favoriteState extends State<favorite> {
                         elevation: 8,
                         margin: EdgeInsets.all(10),
                         shadowColor: gColor,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Card(
-                        child: Container(
-                          height: 100,
-                          color: Colors.white,
-                          child: Row(
-                            children: [
-                              Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Expanded(
-                                    child: Image.asset("asset/image/ow.png"),
-                                    flex: 2,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  alignment: Alignment.topLeft,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        flex: 5,
-                                        child: ListTile(
-                                          title: Text("กระเพรา"),
-                                          subtitle: Text("Ocimum tenuiflorum"),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 5,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            TextButton(
-                                              child: Text("รายละเอียด"),
-                                              onPressed: () {
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (contex) =>
-                                                        Control(),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                            SizedBox(
-                                              width: 8,
-                                            ),
-                                            /*   TextButton(
-                                  child: Text("วิธีการปรุง"),
-                                  onPressed: () {},
-                                ),*/
-                                            SizedBox(
-                                              width: 8,
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                flex: 8,
-                              ),
-                            ],
-                          ),
-                        ),
-                        elevation: 8,
-                        margin: EdgeInsets.all(10),
-                        shadowColor: gColor,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Card(
-                        child: Container(
-                          height: 100,
-                          color: Colors.white,
-                          child: Row(
-                            children: [
-                              Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Expanded(
-                                    child: Image.asset("asset/image/1628.png"),
-                                    flex: 2,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  alignment: Alignment.topLeft,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        flex: 5,
-                                        child: ListTile(
-                                          title: Text(" ขมิ้นชัน"),
-                                          subtitle: Text("Curcuma longa L."),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 5,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            TextButton(
-                                              child: Text("รายละเอียด"),
-                                              onPressed: () {
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (contex) =>
-                                                        Control(),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                            SizedBox(
-                                              width: 8,
-                                            ),
-                                            /*   TextButton(
-                                  child: Text("วิธีการปรุง"),
-                                  onPressed: () {},
-                                ),*/
-                                            SizedBox(
-                                              width: 8,
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                flex: 8,
-                              ),
-                            ],
-                          ),
-                        ),
-                        elevation: 8,
-                        margin: EdgeInsets.all(10),
-                        shadowColor: gColor,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Card(
-                        child: Container(
-                          height: 100,
-                          color: Colors.white,
-                          child: Row(
-                            children: [
-                              Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Expanded(
-                                    child: Image.asset(
-                                        "asset/image/storyetail.png"),
-                                    flex: 2,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  alignment: Alignment.topLeft,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        flex: 5,
-                                        child: ListTile(
-                                          title: Text("กระเทียม"),
-                                          subtitle: Text("Allium sativum L."),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 5,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            TextButton(
-                                              child: Text("รายละเอียด"),
-                                              onPressed: () {
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (contex) =>
-                                                        Control(),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                            SizedBox(
-                                              width: 8,
-                                            ),
-                                            /*   TextButton(
-                                  child: Text("วิธีการปรุง"),
-                                  onPressed: () {},
-                                ),*/
-                                            SizedBox(
-                                              width: 8,
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                flex: 8,
-                              ),
-                            ],
-                          ),
-                        ),
-                        elevation: 8,
-                        margin: EdgeInsets.all(10),
-                        shadowColor: gColor,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Card(
-                        child: Container(
-                          height: 100,
-                          color: Colors.white,
-                          child: Row(
-                            children: [
-                              Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Expanded(
-                                    child: Image.asset("asset/image/zd43.png"),
-                                    flex: 2,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  alignment: Alignment.topLeft,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        flex: 5,
-                                        child: ListTile(
-                                          title: Text("ว่านหางจระเข้"),
-                                          subtitle:
-                                              Text("Aloe vera (L.) Burm.f."),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 5,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            TextButton(
-                                              child: Text("รายละเอียด"),
-                                              onPressed: () {
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (contex) =>
-                                                        Control(),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                            SizedBox(
-                                              width: 8,
-                                            ),
-                                            /*   TextButton(
-                                  child: Text("วิธีการปรุง"),
-                                  onPressed: () {},
-                                ),*/
-                                            SizedBox(
-                                              width: 8,
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                flex: 8,
-                              ),
-                            ],
-                          ),
-                        ),
-                        elevation: 8,
-                        margin: EdgeInsets.all(10),
-                        shadowColor: gColor,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Card(
-                        child: Container(
-                          height: 100,
-                          color: Colors.white,
-                          child: Row(
-                            children: [
-                              Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(10),
-                                  child: Expanded(
-                                    child: Image.asset("asset/image/5f4af.png"),
-                                    flex: 2,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  alignment: Alignment.topLeft,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        flex: 5,
-                                        child: ListTile(
-                                          title: Text("ฟ้าทะลายโจร"),
-                                          subtitle:
-                                              Text("Andrographis paniculata"),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 5,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            TextButton(
-                                              child: Text("รายละเอียด"),
-                                              onPressed: () {
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (contex) =>
-                                                        Control(),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                            SizedBox(
-                                              width: 8,
-                                            ),
-                                            /*   TextButton(
-                                  child: Text("วิธีการปรุง"),
-                                  onPressed: () {},
-                                ),*/
-                                            SizedBox(
-                                              width: 8,
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                flex: 8,
-                              ),
-                            ],
-                          ),
-                        ),
-                        elevation: 8,
-                        margin: EdgeInsets.all(10),
-                        shadowColor: gColor,
-                      ),
-                    ],
+                      );
+
+                      //----------------------------------------------------------------------
+                    },
                   ),
                 ),
+                //--------------------------------------------------------------------------
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _showMyDialog(var key, imgurl) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'ยืนยันการลบ',
+            style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Text(
+                  'คุณแน่ใจใช่ไหมที่จะลบรายการ',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'ยืนยัน',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () {
+                print('Confirmed');
+                _delete(imgurl);
+                fdbfirebase.child(key).remove();
+                //print(key);
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(
+                'ยกเลิก',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

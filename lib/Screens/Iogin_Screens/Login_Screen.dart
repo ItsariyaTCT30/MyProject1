@@ -6,6 +6,9 @@ import 'package:login_logout_app/Screens/Menu2.dart';
 import 'package:login_logout_app/Screens/admin/admin_home.dart';
 import 'package:login_logout_app/Screens/index_home.dart';
 import 'package:login_logout_app/Screens/menu.dart';
+import 'package:login_logout_app/login_Google/authentication.dart';
+import 'package:login_logout_app/login_Google/custom_colors.dart';
+import 'package:login_logout_app/login_Google/google_sign_in_button.dart';
 import 'package:sign_button/sign_button.dart';
 import '../../constants.dart';
 import '../Home_Screen.dart';
@@ -307,6 +310,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: size.height * 0.04,
                           ),
+                          /*  FutureBuilder(
+                            future: Authentication.initializeFirebase(
+                                context: context),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) {
+                                return Text('Error initializing Firebase');
+                              } else if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return GoogleSignInButton();
+                              }
+                              return CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  CustomColors.firebaseOrange,
+                                ),
+                              );
+                            },
+                          ),*/
                         ],
                       ),
                     ),
