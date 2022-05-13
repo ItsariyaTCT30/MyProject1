@@ -69,7 +69,7 @@ class _favoriteState extends State<favorite> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
+        /*  actions: <Widget>[
           IconButton(
             icon: Icon(Icons.favorite),
             color: aColor,
@@ -81,7 +81,7 @@ class _favoriteState extends State<favorite> {
               );
             },
           ),
-        ],
+        ],*/
         backgroundColor: gColor,
         title: Text('Medicinal Herbs'),
       ),
@@ -205,7 +205,13 @@ class _favoriteState extends State<favorite> {
                                               MainAxisAlignment.end,
                                           children: [
                                             TextButton(
-                                              child: Text("รายละเอียด"),
+                                              child: Text(
+                                                "รายละเอียด",
+                                                style: TextStyle(
+                                                  color: gColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
                                               onPressed: () {
                                                 Navigator.push(
                                                   context,
@@ -266,30 +272,34 @@ class _favoriteState extends State<favorite> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            'ยืนยันการลบ',
+            'คุณต้องการลบข้อมูลในลิสต์หรือไม่',
             style: TextStyle(
-              fontSize: 26,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
-          content: SingleChildScrollView(
+          /*  content: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Text(
-                  'คุณแน่ใจใช่ไหมที่จะลบรายการ',
+                  Text(
+                  'คุณต้องการลบข้อมูลในลิสต์หรือไม่',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 16,
                   ),
                 ),
               ],
             ),
-          ),
+          ),*/
           actions: <Widget>[
-            TextButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: gColor, // Background color
+              ),
               child: Text(
                 'ยืนยัน',
                 style: TextStyle(
                   fontSize: 20,
+                  color: sColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -301,11 +311,15 @@ class _favoriteState extends State<favorite> {
                 Navigator.of(context).pop();
               },
             ),
-            TextButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: ttColor, // Background color
+              ),
               child: Text(
                 'ยกเลิก',
                 style: TextStyle(
                   fontSize: 20,
+                  color: bColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),

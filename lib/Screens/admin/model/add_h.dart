@@ -51,10 +51,9 @@ class _AddHState extends State<AddH> {
               ),
             ),
             ListTile(
-              leading: Icon(
-                Icons.home,
+              leading: ImageIcon(
+                AssetImage("asset/image/home.png"),
                 size: 32,
-                color: Colors.green[600],
               ),
               title: const Text(
                 'หน้าหลัก',
@@ -64,35 +63,33 @@ class _AddHState extends State<AddH> {
                 ),
               ),
               onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: ImageIcon(
+                AssetImage("asset/image/add (1).png"),
+                size: 32,
+              ),
+              title: const Text(
+                'หน้าเพิ่มข้อมูล',
+                style: TextStyle(
+                  color: gColor,
+                  fontSize: 28,
+                ),
+              ),
+              onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (contex) => MainMenu(),
+                    builder: (contex) => AddH(),
                   ),
                 );
               },
             ),
             ListTile(
-              leading: Icon(
-                Icons.add_box,
+              leading: ImageIcon(
+                AssetImage("asset/image/edit (1).png"),
                 size: 32,
-                color: Colors.yellow[800],
-              ),
-              title: const Text(
-                'หน้าเพิ่มข้อมูล',
-                style: TextStyle(
-                  color: aColor,
-                  fontSize: 28,
-                ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.edit,
-                size: 32,
-                color: Colors.orange[900],
               ),
               title: const Text(
                 'หน้าแก้ไขข้อมูล',
@@ -110,10 +107,9 @@ class _AddHState extends State<AddH> {
               },
             ),
             ListTile(
-              leading: Icon(
-                Icons.logout,
+              leading: ImageIcon(
+                AssetImage("asset/image/logout.png"),
                 size: 32,
-                color: Colors.red[800],
               ),
               title: const Text(
                 'ออกจากระบบ',

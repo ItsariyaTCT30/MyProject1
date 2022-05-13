@@ -49,15 +49,14 @@ class _MainMenuState extends State<MainMenu> {
               ),
             ),
             ListTile(
-              leading: Icon(
-                Icons.home,
+              leading: ImageIcon(
+                AssetImage("asset/image/home.png"),
                 size: 32,
-                color: Colors.green[600],
               ),
               title: const Text(
                 'หน้าหลัก',
                 style: TextStyle(
-                  color: aColor,
+                  color: gColor,
                   fontSize: 28,
                 ),
               ),
@@ -66,10 +65,9 @@ class _MainMenuState extends State<MainMenu> {
               },
             ),
             ListTile(
-              leading: Icon(
-                Icons.add_box,
+              leading: ImageIcon(
+                AssetImage("asset/image/add (1).png"),
                 size: 32,
-                color: Colors.yellow[800],
               ),
               title: const Text(
                 'หน้าเพิ่มข้อมูล',
@@ -87,10 +85,9 @@ class _MainMenuState extends State<MainMenu> {
               },
             ),
             ListTile(
-              leading: Icon(
-                Icons.edit,
+              leading: ImageIcon(
+                AssetImage("asset/image/edit (1).png"),
                 size: 32,
-                color: Colors.orange[900],
               ),
               title: const Text(
                 'หน้าแก้ไขข้อมูล',
@@ -108,31 +105,9 @@ class _MainMenuState extends State<MainMenu> {
               },
             ),
             ListTile(
-              leading: Icon(
-                Icons.edit,
+              leading: ImageIcon(
+                AssetImage("asset/image/logout.png"),
                 size: 32,
-                color: Colors.orange[900],
-              ),
-              title: const Text(
-                'test',
-                style: TextStyle(
-                  color: gColor,
-                  fontSize: 28,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (contex) => MyApp(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.logout,
-                size: 32,
-                color: Colors.red[800],
               ),
               title: const Text(
                 'ออกจากระบบ',

@@ -226,14 +226,14 @@ class _MethodScreensState extends State<MethodScreens> {
       ),
       // encourage your user to leave a high rating?
       message: Text(
-        'Tap a star to set your rating. Add more description here if you want.',
+        'ให้คะแนนสมุนไพร',
         textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 15),
+        style: const TextStyle(fontSize: 18),
       ),
       // your app's logo?
       image: const FlutterLogo(size: 100),
-      submitButtonText: 'Submit',
-      commentHint: 'Set your custom comment hint',
+      submitButtonText: 'ส่ง',
+      commentHint: 'ข้อเสนอแนะ',
       onCancelled: () => print('cancelled'),
       onSubmitted: (response) {
         print('rating: ${response.rating}, comment: ${response.comment}');

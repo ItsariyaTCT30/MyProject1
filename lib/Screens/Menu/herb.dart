@@ -33,7 +33,8 @@ class _HerbState extends State<Herb> {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
-  final _saved = Set<_HerbState>();
+  var isSelected = false;
+  var icon = Icons.favorite_border;
 
   String email = 'lemail';
   String password = 'lpassword';
@@ -81,7 +82,8 @@ class _HerbState extends State<Herb> {
         print(onError.code);
         print(onError.message);
       });
-      final snackBar = SnackBar(content: Text('เพิ่มสำเร็จ'));
+      final snackBar =
+          SnackBar(content: Text('สมุนไพรได้เพิ่มในลิสต์ของคุณแล้ว'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       print(filefName);
       print(filefEName);
@@ -193,7 +195,7 @@ class _HerbState extends State<Herb> {
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.home_rounded, size: 32),
+                leading: Icon(Icons.home_rounded, size: 32, color: gColor),
                 title: Text(
                   'หน้าหลัก',
                   style: TextStyle(
@@ -209,7 +211,10 @@ class _HerbState extends State<Herb> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.local_florist, size: 32),
+                leading: ImageIcon(
+                    AssetImage("asset/image/herbal-spa-treatment-leaves.png"),
+                    size: 32,
+                    color: gColor),
                 title: Text(
                   'สมุนไพร',
                   style: TextStyle(
@@ -225,7 +230,7 @@ class _HerbState extends State<Herb> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.sick, size: 32),
+                leading: Icon(Icons.sick, size: 32, color: gColor),
                 title: Text(
                   'ข้อบ่งใช้',
                   style: TextStyle(
@@ -241,7 +246,8 @@ class _HerbState extends State<Herb> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.insert_drive_file_rounded, size: 32),
+                leading: Icon(Icons.insert_drive_file_rounded,
+                    size: 32, color: gColor),
                 title: Text(
                   'คลังข้อมูล',
                   style: TextStyle(
@@ -257,7 +263,7 @@ class _HerbState extends State<Herb> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.favorite, size: 32),
+                leading: Icon(Icons.favorite, size: 32, color: gColor),
                 title: Text(
                   'สิ่งที่ฉันถูกใจ',
                   style: TextStyle(
@@ -281,7 +287,7 @@ class _HerbState extends State<Herb> {
                 color: ttColor,
               ),
               ListTile(
-                leading: Icon(Icons.logout, size: 32),
+                leading: Icon(Icons.logout, size: 32, color: gColor),
                 title: Text(
                   'ออกจากจากระบบ',
                   style: TextStyle(
@@ -312,7 +318,7 @@ class _HerbState extends State<Herb> {
           ),
           centerTitle: true,
           actions: [
-            IconButton(
+            /*  IconButton(
               iconSize: 32,
               onPressed: () async {
                 await _signOut();
@@ -324,7 +330,11 @@ class _HerbState extends State<Herb> {
                 }
               },
               icon: Icon(Icons.logout),
-            )
+            )*/
+            IconButton(
+                onPressed: () => Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => SearchPage())),
+                icon: Icon(Icons.search))
           ],
         ),
         body: Stack(children: <Widget>[
@@ -369,7 +379,7 @@ class _HerbState extends State<Herb> {
                   SizedBox(
                     height: 25,
                   ),
-                  Container(
+                  /*  Container(
                     decoration: BoxDecoration(
                       color: Color(0xffffffff).withOpacity(0.5),
                       borderRadius: BorderRadius.circular(10),
@@ -395,7 +405,7 @@ class _HerbState extends State<Herb> {
                             onPressed: null),
                       ],
                     ),
-                  ),
+                  ),*/
                   SizedBox(
                     height: 25,
                   ),
@@ -441,17 +451,6 @@ class _HerbState extends State<Herb> {
                                           fit: BoxFit.fitWidth,
                                         ),
                                       ),
-                                      /* Align(
-                                        alignment: Alignment.topLeft,
-                                        child: FavoriteButton(
-                                          isFavorite: false, iconSize: 40,
-
-                                          // iconDisabledColor: Colors.white,
-                                          valueChanged: (_isFavorite) {
-                                            print('Is Favorite : $_isFavorite');
-                                          },
-                                        ),
-                                      ),*/
                                       //-------------------------------------------
 
                                       //---------------------------------------
@@ -485,7 +484,13 @@ class _HerbState extends State<Herb> {
                                                 color: Colors.red),
                                             onPressed: null),
                                       ),*/
-                                      Padding(
+                                      //  Container(
+                                      //      width: double.infinity,
+                                      //      color:
+                                      //          Color.fromARGB(100, 22, 44, 33),
+                                      //  margin: EdgeInsets.all(20),
+                                      //  padding: EdgeInsets.all(0),
+                                      /*  child:*/ Padding(
                                         padding: const EdgeInsets.only(
                                             left: 20, bottom: 15, top: 10),
                                         child: Align(
@@ -501,7 +506,14 @@ class _HerbState extends State<Herb> {
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 30,
-                                                    color: sColor),
+                                                    color: bColor,
+                                                    shadows: [
+                                                      Shadow(
+                                                          // bottomLeft
+                                                          offset: Offset(
+                                                              -1.5, -1.5),
+                                                          color: Colors.white),
+                                                    ]),
                                               ),
                                               Row(
                                                 children: <Widget>[
@@ -528,6 +540,7 @@ class _HerbState extends State<Herb> {
                                           ),
                                         ),
                                       )
+                                      //)
                                     ],
                                   ),
                                 ),
@@ -547,6 +560,40 @@ class _HerbState extends State<Herb> {
           ),
         ]),
       ),
+    );
+  }
+}
+
+// Search Page
+class SearchPage extends StatelessWidget {
+  const SearchPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+          backgroundColor: gColor,
+          // The search area here
+          title: Container(
+            width: double.infinity,
+            height: 40,
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(5)),
+            child: Center(
+              child: TextField(
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        /* Clear the search field */
+                      },
+                    ),
+                    hintText: 'Search...',
+                    border: InputBorder.none),
+              ),
+            ),
+          )),
     );
   }
 }

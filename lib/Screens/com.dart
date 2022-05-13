@@ -251,7 +251,7 @@ class _ComState extends State<Com> {
         appBar: AppBar(
           backgroundColor: gColor,
           title: Text(
-            "Medicinal Herbs",
+            "Comments",
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

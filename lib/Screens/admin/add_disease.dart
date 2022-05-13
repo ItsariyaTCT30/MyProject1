@@ -20,7 +20,7 @@ class AddDisease extends StatefulWidget {
 
 class _AddDiseaseState extends State<AddDisease> {
   FirebaseStorage storage = FirebaseStorage.instance;
-  String? name, imgURL;
+  String? name, imgURL, Hiname, Htname, Hename, Hdname, Hhname;
   final formKey = GlobalKey<FormState>();
   var file;
   final picker = ImagePicker();
@@ -78,7 +78,7 @@ class _AddDiseaseState extends State<AddDisease> {
     }
   }
 
-  Future<void> createData() async {
+  Future<void> createData(Hiname, Htname, Hename, Hdname, Hhname) async {
     if (file != null && _selectedType != null) {
       try {
         TaskSnapshot snapshot =
@@ -89,7 +89,11 @@ class _AddDiseaseState extends State<AddDisease> {
             'tName': name,
             'type': _selectedType,
             'imgURL': downloadUrl,
-            'amonth': 0,
+            'hiName': Hiname,
+            'htName': Htname,
+            'heName': Hename,
+            'hdName': Hdname,
+            'hhName': Hhname,
           }).then((value) {
             formKey.currentState!.reset();
             file = null;
@@ -311,7 +315,24 @@ class _AddDiseaseState extends State<AddDisease> {
                                       Icons.add_box,
                                       color: Colors.red,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      if (formKey.currentState!.validate()) {
+                                        formKey.currentState!.save();
+                                        Hiname = snapshot.value['imgURL'];
+                                        Htname = snapshot.value['tName'];
+                                        Hename = snapshot.value['eName'];
+                                        Hdname = snapshot.value['dName'];
+                                        Hhname = snapshot.value['hName'];
+
+                                        createData(Hiname, Htname, Hename,
+                                            Hdname, Hhname);
+                                        print(Hiname);
+                                        print(Htname);
+                                        print(Hename);
+                                        print(Hdname);
+                                        print(Hhname);
+                                      }
+                                    },
                                   ),
                                 ],
                               ),
@@ -480,7 +501,7 @@ class _AddDiseaseState extends State<AddDisease> {
         onPressed: () {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();
-            createData();
+            createData(Hiname, Htname, Hename, Hdname, Hhname);
           }
         },
         child: Text('เพิ่ม'),

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:login_logout_app/constants.dart';
 import 'package:path/path.dart' as path;
 import 'package:firebase_database/firebase_database.dart';
@@ -18,7 +19,7 @@ class EditDisease extends StatefulWidget {
 
 class _EditDiseaseState extends State<EditDisease> {
   FirebaseStorage storage = FirebaseStorage.instance;
-  String? name, imgURL;
+  String? name, imgURL, Hiname, Htname, Hename, Hdname, Hhname;
   final formKey = GlobalKey<FormState>();
   var file;
   final picker = ImagePicker();
@@ -44,6 +45,7 @@ class _EditDiseaseState extends State<EditDisease> {
 
   //กำหนดค่าเริ่มต้นสำหรับการส่งข้อมูลไปที่ Realtime Firebase
   final dbfirebase = FirebaseDatabase.instance.reference().child('Disease');
+  get hdbfirebase => FirebaseDatabase.instance.reference().child('Food');
   var db;
 
   // Select and image from the gallery or take a picture with the camera
@@ -69,7 +71,7 @@ class _EditDiseaseState extends State<EditDisease> {
     }
   }
 
-  Future<void> updateData() async {
+  Future<void> updateData(Hiname, Htname, Hename, Hdname, Hhname) async {
     FirebaseStorage.instance.refFromURL(widget.readURL).delete();
     try {
       TaskSnapshot snapshot =
@@ -80,7 +82,11 @@ class _EditDiseaseState extends State<EditDisease> {
           'tName': name,
           'type': _selectedType,
           'imgURL': downloadUrl,
-          'amonth': 0,
+          'hiName': Hiname,
+          'htName': Htname,
+          'heName': Hename,
+          'hdName': Hdname,
+          'hhName': Hhname,
         }).then((value) {
           print("Success");
           Navigator.of(context).pop();
@@ -103,12 +109,16 @@ class _EditDiseaseState extends State<EditDisease> {
     }
   }
 
-  Future<void> updateData2() async {
+  Future<void> updateData2(Hiname, Htname, Hename, Hdname, Hhname) async {
     await dbfirebase.child(widget.foodKey).update({
       'tName': name,
       'type': _selectedType,
       'imgURL': widget.readURL,
-      'amonth': 0,
+      'hiName': Hiname,
+      'htName': Htname,
+      'heName': Hename,
+      'hdName': Hdname,
+      'hhName': Hhname,
     }).then((value) {
       print("Success2");
       Navigator.of(context).pop();
@@ -183,7 +193,7 @@ class _EditDiseaseState extends State<EditDisease> {
                       Center(
                         child: file == null
                             ? CircleAvatar(
-                                radius: 100,
+                                radius: 30,
                                 backgroundImage: NetworkImage(widget.readURL!),
                                 //backgroundColor: pColor,
                               )
@@ -203,6 +213,95 @@ class _EditDiseaseState extends State<EditDisease> {
                         height: 10,
                       ),
                     ],
+                  ),
+                ),
+                Expanded(
+                  child: FirebaseAnimatedList(
+                    query: hdbfirebase,
+                    itemBuilder: (context, snapshot, animation, index) {
+                      return Container(
+                        //height: 100,
+                        child: Padding(
+                          padding: EdgeInsets.all(3.0),
+                          child: Card(
+                            elevation: 5,
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                radius: 28,
+                                backgroundImage:
+                                    NetworkImage('${snapshot.value['imgURL']}'),
+                                //backgroundColor: pColor,
+                              ),
+                              title: Text(
+                                '${snapshot.value['tName']}',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Row(
+                                children: <Widget>[
+                                  Flexible(
+                                    child: Container(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: Text(
+                                          '${snapshot.value['eName']}',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  /* RadioListTile(
+                                    value: 'dog',
+                                    groupValue: myPet,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        myPet = value.toString();
+                                      });
+                                    },
+                                  )*/
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.add_box,
+                                      color: Colors.red,
+                                    ),
+                                    onPressed: () {
+                                      if (formKey.currentState!.validate()) {
+                                        formKey.currentState!.save();
+                                        Hiname = snapshot.value['imgURL'];
+                                        Htname = snapshot.value['tName'];
+                                        Hename = snapshot.value['eName'];
+                                        Hdname = snapshot.value['dName'];
+                                        Hhname = snapshot.value['hName'];
+
+                                        print(Hiname);
+                                        print(Htname);
+                                        print(Hename);
+                                        print(Hdname);
+                                        print(Hhname);
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                      //---------------------------------
+
+                      //---------------------------------
+                    },
                   ),
                 ),
               ],
@@ -264,7 +363,9 @@ class _EditDiseaseState extends State<EditDisease> {
         onPressed: () {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();
-            file == null ? updateData2() : updateData();
+            file == null
+                ? updateData2(Hiname, Htname, Hename, Hdname, Hhname)
+                : updateData(Hiname, Htname, Hename, Hdname, Hhname);
             formKey.currentState!.reset();
             file = null;
           }

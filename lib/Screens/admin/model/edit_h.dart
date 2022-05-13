@@ -54,10 +54,9 @@ class _EditHState extends State<EditH> {
               ),
             ),
             ListTile(
-              leading: Icon(
-                Icons.home,
+              leading: ImageIcon(
+                AssetImage("asset/image/home.png"),
                 size: 32,
-                color: Colors.green[600],
               ),
               title: const Text(
                 'หน้าหลัก',
@@ -71,10 +70,9 @@ class _EditHState extends State<EditH> {
               },
             ),
             ListTile(
-              leading: Icon(
-                Icons.add_box,
+              leading: ImageIcon(
+                AssetImage("asset/image/add (1).png"),
                 size: 32,
-                color: Colors.yellow[800],
               ),
               title: const Text(
                 'หน้าเพิ่มข้อมูล',
@@ -92,27 +90,29 @@ class _EditHState extends State<EditH> {
               },
             ),
             ListTile(
-              leading: Icon(
-                Icons.edit,
+              leading: ImageIcon(
+                AssetImage("asset/image/edit (1).png"),
                 size: 32,
-                color: Colors.orange[900],
               ),
               title: const Text(
                 'หน้าแก้ไขข้อมูล',
                 style: TextStyle(
-                  color: aColor,
+                  color: gColor,
                   fontSize: 28,
                 ),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (contex) => EditH(),
+                  ),
+                );
               },
             ),
             ListTile(
-              leading: Icon(
-                Icons.logout,
+              leading: ImageIcon(
+                AssetImage("asset/image/logout.png"),
                 size: 32,
-                color: Colors.red[800],
               ),
               title: const Text(
                 'ออกจากระบบ',
@@ -285,11 +285,11 @@ class _EditHState extends State<EditH> {
                   ),
                   InkWell(
                     onTap: () {
-                      /*  Navigator.of(context).push(
+                      Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (contex) => SDisease(),
                         ),
-                      );*/
+                      );
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(
@@ -379,11 +379,11 @@ class _EditHState extends State<EditH> {
                   ),
                   InkWell(
                     onTap: () {
-                      /*  Navigator.of(context).push(
+                      Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (contex) => SData(),
                         ),
-                      );*/
+                      );
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(

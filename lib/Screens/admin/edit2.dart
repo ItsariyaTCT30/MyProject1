@@ -149,20 +149,24 @@ class _SDiseaseState extends State<SDisease> {
             child: Column(
               children: <Widget>[
                 Text(
-                  'คุณแน่ใจใช่ไหมที่จะลบรายการ',
+                  'คุณต้องการลบข้อมูลข้อบ่งใช้หรือไม่',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 16,
                   ),
                 ),
               ],
             ),
           ),
           actions: <Widget>[
-            TextButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: gColor, // Background color
+              ),
               child: Text(
                 'ยืนยัน',
                 style: TextStyle(
                   fontSize: 20,
+                  color: sColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -174,11 +178,15 @@ class _SDiseaseState extends State<SDisease> {
                 Navigator.of(context).pop();
               },
             ),
-            TextButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: ttColor, // Background color
+              ),
               child: Text(
                 'ยกเลิก',
                 style: TextStyle(
                   fontSize: 20,
+                  color: bColor,
                   fontWeight: FontWeight.bold,
                 ),
               ),

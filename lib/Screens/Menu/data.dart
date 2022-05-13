@@ -135,7 +135,7 @@ class _DataState extends State<Data> {
                 ),
               ),
               ListTile(
-                leading: Icon(Icons.home_rounded, size: 32),
+                leading: Icon(Icons.home_rounded, size: 32, color: gColor),
                 title: Text(
                   'หน้าหลัก',
                   style: TextStyle(
@@ -151,7 +151,10 @@ class _DataState extends State<Data> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.local_florist, size: 32),
+                leading: ImageIcon(
+                    AssetImage("asset/image/herbal-spa-treatment-leaves.png"),
+                    size: 32,
+                    color: gColor),
                 title: Text(
                   'สมุนไพร',
                   style: TextStyle(
@@ -167,7 +170,7 @@ class _DataState extends State<Data> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.sick, size: 32),
+                leading: Icon(Icons.sick, size: 32, color: gColor),
                 title: Text(
                   'ข้อบ่งใช้',
                   style: TextStyle(
@@ -183,7 +186,8 @@ class _DataState extends State<Data> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.insert_drive_file_rounded, size: 32),
+                leading: Icon(Icons.insert_drive_file_rounded,
+                    size: 32, color: gColor),
                 title: Text(
                   'คลังข้อมูล',
                   style: TextStyle(
@@ -199,7 +203,7 @@ class _DataState extends State<Data> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.favorite, size: 32),
+                leading: Icon(Icons.favorite, size: 32, color: gColor),
                 title: Text(
                   'สิ่งที่ฉันถูกใจ',
                   style: TextStyle(
@@ -223,7 +227,7 @@ class _DataState extends State<Data> {
                 color: ttColor,
               ),
               ListTile(
-                leading: Icon(Icons.logout, size: 32),
+                leading: Icon(Icons.logout, size: 32, color: gColor),
                 title: Text(
                   'ออกจากจากระบบ',
                   style: TextStyle(
@@ -291,7 +295,7 @@ class _DataState extends State<Data> {
                       height: 15,
                     ),
                     Text(
-                      'คลั่งข้อมูล',
+                      'คลังข้อมูล',
                       style: TextStyle(
                           fontSize: 35,
                           color: Colors.white,
@@ -363,8 +367,8 @@ class _DataState extends State<Data> {
                                               '${snapshot.value['tName']}',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 24,
-                                                  color: tColor),
+                                                  fontSize: 20,
+                                                  color: sColor),
                                             ),
                                             Row(
                                               children: <Widget>[

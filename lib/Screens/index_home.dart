@@ -51,7 +51,11 @@ class IndexHome extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.home_rounded, size: 32),
+              leading: Icon(
+                Icons.home_rounded,
+                size: 32,
+                color: gColor,
+              ),
               title: Text(
                 'หน้าหลัก',
                 style: TextStyle(
@@ -67,7 +71,11 @@ class IndexHome extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.local_florist, size: 32),
+              leading: ImageIcon(
+                AssetImage("asset/image/herbal-spa-treatment-leaves.png"),
+                size: 32,
+                color: gColor,
+              ),
               title: Text(
                 'สมุนไพร',
                 style: TextStyle(
@@ -83,7 +91,7 @@ class IndexHome extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.sick, size: 32),
+              leading: Icon(Icons.sick, size: 32, color: gColor),
               title: Text(
                 'ข้อบ่งใช้',
                 style: TextStyle(
@@ -99,7 +107,8 @@ class IndexHome extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.insert_drive_file_rounded, size: 32),
+              leading: Icon(Icons.insert_drive_file_rounded,
+                  size: 32, color: gColor),
               title: Text(
                 'คลังข้อมูล',
                 style: TextStyle(
@@ -115,7 +124,7 @@ class IndexHome extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.favorite, size: 32),
+              leading: Icon(Icons.favorite, size: 32, color: gColor),
               title: Text(
                 'สิ่งที่ฉันถูกใจ',
                 style: TextStyle(
@@ -139,7 +148,7 @@ class IndexHome extends StatelessWidget {
               color: ttColor,
             ),
             ListTile(
-              leading: Icon(Icons.logout, size: 32),
+              leading: Icon(Icons.logout, size: 32, color: gColor),
               title: Text(
                 'ออกจากจากระบบ',
                 style: TextStyle(
