@@ -3,21 +3,22 @@ import 'package:login_logout_app/Screens/components/Herb_Method_Screens.dart';
 
 import '../../constants.dart';
 
-class DetailsScreens extends StatefulWidget {
-  final String imgURL, name, ename, dname;
-  const DetailsScreens({
+class DetailsScreensButton extends StatefulWidget {
+  final String imgURL, name, ename, dname, Cname;
+  const DetailsScreensButton({
     Key? key,
     required this.imgURL,
     required this.name,
     required this.ename,
     required this.dname,
+    required this.Cname,
   }) : super(key: key);
 
   @override
-  _DetailsScreensState createState() => _DetailsScreensState();
+  _DetailsScreensButtonState createState() => _DetailsScreensButtonState();
 }
 
-class _DetailsScreensState extends State<DetailsScreens> {
+class _DetailsScreensButtonState extends State<DetailsScreensButton> {
   @override
   void initState() {
     // TODO: implement initState
@@ -96,7 +97,35 @@ class _DetailsScreensState extends State<DetailsScreens> {
                 ),
               ),
               SizedBox(height: 20.0),
-
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  primary: gColor,
+                  fixedSize: const Size(150, 43),
+                  shape: StadiumBorder(),
+                ),
+                icon: Icon(
+                  Icons.navigate_next,
+                  color: sColor,
+                  size: 30,
+                ),
+                label: Text(
+                  'วิธีปรุงยาสมุนไพร',
+                  style: TextStyle(fontSize: 18, color: sColor),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => MethodScreens(
+                        imgURL: widget.imgURL,
+                        name: widget.name,
+                        ename: widget.ename,
+                        Cname: widget.Cname,
+                      ),
+                    ),
+                  );
+                },
+              ),
               SizedBox(height: 10.0),
               //buildProductList(),
               SizedBox(height: 10.0),

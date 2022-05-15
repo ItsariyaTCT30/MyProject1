@@ -7,13 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditFood extends StatefulWidget {
-  final dynamic foodKey, readName, readEName, readDName, readHName, readURL;
+  final dynamic foodKey, readName, readEName, readDName, readURL;
   const EditFood(
       {required this.foodKey,
       this.readName,
       this.readEName,
       this.readDName,
-      this.readHName,
       this.readURL})
       : super();
 
@@ -23,7 +22,7 @@ class EditFood extends StatefulWidget {
 
 class _EditFoodState extends State<EditFood> {
   FirebaseStorage storage = FirebaseStorage.instance;
-  String? name, Ename, Dname, Hname, imgURL;
+  String? name, Ename, Dname, imgURL;
   final formKey = GlobalKey<FormState>();
   var file;
   final picker = ImagePicker();
@@ -31,7 +30,6 @@ class _EditFoodState extends State<EditFood> {
   String? fileName;
   String? fileEName;
   String? fileDName;
-  String? fileHName;
 
   ListResult? result;
   List<Reference>? allFiles;
@@ -76,7 +74,6 @@ class _EditFoodState extends State<EditFood> {
           'tName': name,
           'eName': Ename,
           'dName': Dname,
-          'hName': Hname,
           'imgURL': downloadUrl,
           'amonth': 0,
         }).then((value) {
@@ -91,7 +88,6 @@ class _EditFoodState extends State<EditFood> {
         print(fileName);
         print(fileEName);
         print(fileDName);
-        print(fileHName);
         print(imageFile);
         print("URL" + downloadUrl.toString());
         //setState(() {});
@@ -109,7 +105,6 @@ class _EditFoodState extends State<EditFood> {
       'tName': name,
       'eName': Ename,
       'dName': Dname,
-      'hName': Hname,
       'imgURL': widget.readURL,
       'amonth': 0,
     }).then((value) {
@@ -124,7 +119,6 @@ class _EditFoodState extends State<EditFood> {
     print(fileName);
     print(fileEName);
     print(fileDName);
-    print(fileHName);
     print(imageFile);
     print(file);
     //setState(() {});
@@ -195,7 +189,6 @@ class _EditFoodState extends State<EditFood> {
                       txtName(),
                       txteName(),
                       txtdName(),
-                      txthName(),
                       Center(
                         child: file == null
                             ? CircleAvatar(
@@ -299,31 +292,6 @@ class _EditFoodState extends State<EditFood> {
         },
         onSaved: (value) {
           Dname = value!.trim();
-        },
-      ),
-    );
-  }
-
-  Widget txthName() {
-    return Container(
-      margin: EdgeInsets.fromLTRB(10, 0, 15, 10),
-      child: TextFormField(
-        style: TextStyle(
-          fontSize: 16,
-        ),
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: 'วิธีปรุงสมุนไพร :',
-          hintText: widget.readHName,
-        ),
-        initialValue: widget.readHName,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'กรุณาป้อนข้อมูล';
-          }
-        },
-        onSaved: (value) {
-          Hname = value!.trim();
         },
       ),
     );

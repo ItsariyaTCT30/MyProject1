@@ -19,12 +19,13 @@ class EditDisease extends StatefulWidget {
 
 class _EditDiseaseState extends State<EditDisease> {
   FirebaseStorage storage = FirebaseStorage.instance;
-  String? name, imgURL, Hiname, Htname, Hename, Hdname, Hhname;
+  String? name, Cname, imgURL, Hiname, Htname, Hename, Hdname, Hhname;
   final formKey = GlobalKey<FormState>();
   var file;
   final picker = ImagePicker();
   File? imageFile;
   String? fileName;
+  String? filecName;
   List<String> _type = [
     'ระบบไหลเวียนโลหิต',
     'ระบบทางเดินอาหาร',
@@ -80,6 +81,7 @@ class _EditDiseaseState extends State<EditDisease> {
         final String downloadUrl = await snapshot.ref.getDownloadURL();
         await dbfirebase.child(widget.foodKey).update({
           'tName': name,
+          'cName': Cname,
           'type': _selectedType,
           'imgURL': downloadUrl,
           'hiName': Hiname,
@@ -97,6 +99,7 @@ class _EditDiseaseState extends State<EditDisease> {
         final snackBar = SnackBar(content: Text('แก้ไขสำเร็จ'));
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         print(fileName);
+        print(filecName);
         print(imageFile);
         print("URL" + downloadUrl.toString());
         //setState(() {});
@@ -112,6 +115,7 @@ class _EditDiseaseState extends State<EditDisease> {
   Future<void> updateData2(Hiname, Htname, Hename, Hdname, Hhname) async {
     await dbfirebase.child(widget.foodKey).update({
       'tName': name,
+      'cName': Cname,
       'type': _selectedType,
       'imgURL': widget.readURL,
       'hiName': Hiname,
@@ -129,6 +133,7 @@ class _EditDiseaseState extends State<EditDisease> {
     final snackBar = SnackBar(content: Text('แก้ไขสำเร็จ'));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
     print(fileName);
+    print(filecName);
     print(imageFile);
     print(file);
     //setState(() {});
@@ -190,6 +195,7 @@ class _EditDiseaseState extends State<EditDisease> {
                       ),
                       txtTTTName(),
                       txtName(),
+                      txtcName(),
                       Center(
                         child: file == null
                             ? CircleAvatar(
@@ -331,6 +337,30 @@ class _EditDiseaseState extends State<EditDisease> {
         },
         onSaved: (value) {
           name = value!.trim();
+        },
+      ),
+    );
+  }
+
+  Widget txtcName() {
+    return Container(
+      margin: EdgeInsets.fromLTRB(10, 15, 15, 10),
+      child: TextFormField(
+        style: TextStyle(
+          fontSize: 16,
+        ),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'วิธีการปรุงสมุนไพร :',
+          hintText: 'Input your table name',
+        ),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'กรุณาป้อนข้อมูล';
+          }
+        },
+        onSaved: (value) {
+          Cname = value!.trim();
         },
       ),
     );

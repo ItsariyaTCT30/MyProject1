@@ -40,7 +40,6 @@ class _favoriteState extends State<favorite> {
             //  'tableN': widget.tableName,
             'ftName': v["ftName"],
             'feName': v["feName"],
-            'fhName': v["fhName"],
             'fdName': v["fdName"],
             'fimgURL': v["fimgURL"],
             'amonth': v["amonth"],
@@ -226,8 +225,6 @@ class _favoriteState extends State<favorite> {
                                                           .value['feName'],
                                                       dname: snapshot
                                                           .value['fdName'],
-                                                      hname: snapshot
-                                                          .value['fhName'],
                                                     ),
                                                   ),
                                                 );

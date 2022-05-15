@@ -21,7 +21,7 @@ class AddFood extends StatefulWidget {
 
 class _AddFoodState extends State<AddFood> {
   FirebaseStorage storage = FirebaseStorage.instance;
-  String? name, Ename, Dname, Hname, imgURL;
+  String? name, Ename, Dname, imgURL;
   final formKey = GlobalKey<FormState>();
   var file;
   final picker = ImagePicker();
@@ -29,7 +29,6 @@ class _AddFoodState extends State<AddFood> {
   String? fileName;
   String? fileEName;
   String? fileDName;
-  String? fileHName;
 
   ListResult? result;
   List<Reference>? allFiles;
@@ -72,7 +71,6 @@ class _AddFoodState extends State<AddFood> {
             'tName': name,
             'eName': Ename,
             'dName': Dname,
-            'hName': Hname,
             'imgURL': downloadUrl,
             'amonth': 0,
           }).then((value) {
@@ -88,7 +86,6 @@ class _AddFoodState extends State<AddFood> {
           print(fileName);
           print(fileEName);
           print(fileDName);
-          print(fileHName);
           print(imageFile);
           print(downloadUrl);
           setState(() {});
@@ -213,7 +210,6 @@ class _AddFoodState extends State<AddFood> {
                       txtName(),
                       txteName(),
                       txtdName(),
-                      txthName(),
                       Center(
                         child: file == null
                             ? Text('ไม่มีรูปภาพ')
@@ -477,30 +473,6 @@ class _AddFoodState extends State<AddFood> {
         },
         onSaved: (value) {
           Dname = value!.trim();
-        },
-      ),
-    );
-  }
-
-  Widget txthName() {
-    return Container(
-      margin: EdgeInsets.fromLTRB(10, 0, 15, 10),
-      child: TextFormField(
-        style: TextStyle(
-          fontSize: 16,
-        ),
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: 'วิธีปรุงสมุนไพร :',
-          hintText: 'Input your table name',
-        ),
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'กรุณาป้อนข้อมูล';
-          }
-        },
-        onSaved: (value) {
-          Hname = value!.trim();
         },
       ),
     );

@@ -101,7 +101,6 @@ class _FoodState extends State<Food> {
                                 '${snapshot.value['tName']}',
                                 '${snapshot.value['eName']}',
                                 '${snapshot.value['dName']}',
-                                '${snapshot.value['hName']}',
                                 '${snapshot.value['imgURL']}',
                               );
                               //print(snapshot.key);
@@ -201,8 +200,7 @@ class _FoodState extends State<Food> {
     );
   }
 
-  Future _edit(dynamic foodKey, sendName, sendEName, sendDName, sendHName,
-      sendURL) async {
+  Future _edit(dynamic foodKey, sendName, sendEName, sendDName, sendURL) async {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -211,7 +209,6 @@ class _FoodState extends State<Food> {
           readName: sendName,
           readEName: sendEName,
           readDName: sendDName,
-          readHName: sendHName,
           readURL: sendURL,
         ),
       ),

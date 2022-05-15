@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bordered_text/bordered_text.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -427,7 +428,6 @@ class _HerbState extends State<Herb> {
                                       name: snapshot.value['tName'],
                                       ename: snapshot.value['eName'],
                                       dname: snapshot.value['dName'],
-                                      hname: snapshot.value['hName'],
                                     ),
                                   ),
                                 );
@@ -501,19 +501,17 @@ class _HerbState extends State<Herb> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: <Widget>[
-                                              Text(
-                                                '${snapshot.value['tName']}',
-                                                style: TextStyle(
+                                              BorderedText(
+                                                strokeWidth: 3.5,
+                                                strokeColor: sColor,
+                                                child: Text(
+                                                  '${snapshot.value['tName']}',
+                                                  style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 30,
-                                                    color: bColor,
-                                                    shadows: [
-                                                      Shadow(
-                                                          // bottomLeft
-                                                          offset: Offset(
-                                                              -1.5, -1.5),
-                                                          color: Colors.white),
-                                                    ]),
+                                                    color: Color(0xFF2C3333),
+                                                  ),
+                                                ),
                                               ),
                                               Row(
                                                 children: <Widget>[
@@ -522,18 +520,25 @@ class _HerbState extends State<Herb> {
                                                     backgroundImage: AssetImage(
                                                         'asset/image/123321.jpg'),
                                                   ),*/
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 8.0),
-                                                    child: Text(
-                                                      '${snapshot.value['eName']}',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          color: sColor),
+                                                  Flexible(
+                                                    child: Container(
+                                                      child: Padding(
+                                                        padding:
+                                                            new EdgeInsets.only(
+                                                                right: 13.0),
+                                                        child: Text(
+                                                          '${snapshot.value['eName']}',
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: TextStyle(
+                                                              color: sColor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ),
                                                     ),
-                                                  )
+                                                  ),
                                                 ],
                                               ),
                                             ],

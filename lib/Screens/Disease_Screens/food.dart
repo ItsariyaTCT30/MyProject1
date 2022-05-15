@@ -10,6 +10,7 @@ import 'package:login_logout_app/Screens/Menu/disease.dart';
 import 'package:login_logout_app/Screens/Menu/favorite.dart';
 import 'package:login_logout_app/Screens/admin/backend/admin_data.dart';
 import 'package:login_logout_app/Screens/components/Herb_Details_Screens.dart';
+import 'package:login_logout_app/Screens/components/Herb_Details_Screens_Button.dart';
 import 'package:login_logout_app/Screens/index_home.dart';
 import 'package:login_logout_app/constants.dart';
 
@@ -117,12 +118,12 @@ class _FoodState extends State<Food> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) => DetailsScreens(
+                                  builder: (_) => DetailsScreensButton(
                                     imgURL: snapshot.value['hiName'],
                                     name: snapshot.value['htName'],
                                     ename: snapshot.value['heName'],
                                     dname: snapshot.value['hdName'],
-                                    hname: snapshot.value['hhName'],
+                                    Cname: snapshot.value['cName'],
                                   ),
                                 ),
                               );

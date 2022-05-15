@@ -17,14 +17,14 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../constants.dart';
 
 class MethodScreens extends StatefulWidget {
-  final String imgURL, name, ename, hname;
-  const MethodScreens(
-      {Key? key,
-      required this.imgURL,
-      required this.name,
-      required this.ename,
-      required this.hname})
-      : super(key: key);
+  final String imgURL, name, ename, Cname;
+  const MethodScreens({
+    Key? key,
+    required this.imgURL,
+    required this.name,
+    required this.ename,
+    required this.Cname,
+  }) : super(key: key);
 
   @override
   _MethodScreensState createState() => _MethodScreensState();
@@ -167,7 +167,6 @@ class _MethodScreensState extends State<MethodScreens> {
             //  'tableN': widget.tableName,
             'tName': v["tName"],
             'eName': v["eName"],
-            'hName': v["hName"],
             'dName': v["dName"],
             'imgURL': v["imgURL"],
             'amonth': v["amonth"],
@@ -323,7 +322,7 @@ class _MethodScreensState extends State<MethodScreens> {
               SizedBox(height: 10.0),
               Text(
                 widget
-                    .hname, //"รูปแบบยา ยาต้ม, ยาแคปซูล\nขนาดและวิธีใช้ \nยาต้ม\nต้มเดือด น้ำหนักยา สิ่งละ ๑-๕ บาท (๑๕-๗๕ กรัม) ตามอาการคนไข้ รับประทาน\nครั้งละ ๑ ถ้วยชา (๑๓๕ มิลลิลิตร) วันละ ๒-๓ ครั้ง ก่อนอาหาร\nชนิดแคปซูล\nรับประทานครั้งละ ๐.๕ กรัม วันละ ๓ ครั้ง ก่อนอาหาร",
+                    .Cname, //"รูปแบบยา ยาต้ม, ยาแคปซูล\nขนาดและวิธีใช้ \nยาต้ม\nต้มเดือด น้ำหนักยา สิ่งละ ๑-๕ บาท (๑๕-๗๕ กรัม) ตามอาการคนไข้ รับประทาน\nครั้งละ ๑ ถ้วยชา (๑๓๕ มิลลิลิตร) วันละ ๒-๓ ครั้ง ก่อนอาหาร\nชนิดแคปซูล\nรับประทานครั้งละ ๐.๕ กรัม วันละ ๓ ครั้ง ก่อนอาหาร",
                 style: TextStyle(
                   fontSize: 15.0,
                   color: Colors.grey,

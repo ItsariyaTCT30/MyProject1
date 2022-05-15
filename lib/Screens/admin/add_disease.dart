@@ -20,12 +20,13 @@ class AddDisease extends StatefulWidget {
 
 class _AddDiseaseState extends State<AddDisease> {
   FirebaseStorage storage = FirebaseStorage.instance;
-  String? name, imgURL, Hiname, Htname, Hename, Hdname, Hhname;
+  String? name, Cname, imgURL, Hiname, Htname, Hename, Hdname, Hhname;
   final formKey = GlobalKey<FormState>();
   var file;
   final picker = ImagePicker();
   File? imageFile;
   String? fileName;
+  String? filecName;
 
   //-----------------------------------------------
 // Initial Selected Value
@@ -87,6 +88,7 @@ class _AddDiseaseState extends State<AddDisease> {
           final String downloadUrl = await snapshot.ref.getDownloadURL();
           await dbfirebase.push().set({
             'tName': name,
+            'cName': Cname,
             'type': _selectedType,
             'imgURL': downloadUrl,
             'hiName': Hiname,
@@ -106,6 +108,7 @@ class _AddDiseaseState extends State<AddDisease> {
           final snackBar = SnackBar(content: Text('เพิ่มสำเร็จ'));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
           print(fileName);
+          print(filecName);
           print(imageFile);
           print(downloadUrl);
           setState(() {});
@@ -217,6 +220,7 @@ class _AddDiseaseState extends State<AddDisease> {
                       ),
                       txtTTTName(),
                       txtName(),
+                      txtcName(),
                       // txtTTName(),
                       Center(
                         child: file == null
@@ -288,6 +292,7 @@ class _AddDiseaseState extends State<AddDisease> {
                                             const EdgeInsets.only(left: 8.0),
                                         child: Text(
                                           '${snapshot.value['eName']}',
+                                          overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -469,6 +474,30 @@ class _AddDiseaseState extends State<AddDisease> {
         },
         onSaved: (value) {
           name = value!.trim();
+        },
+      ),
+    );
+  }
+
+  Widget txtcName() {
+    return Container(
+      margin: EdgeInsets.fromLTRB(10, 15, 15, 10),
+      child: TextFormField(
+        style: TextStyle(
+          fontSize: 16,
+        ),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'วิธีการปรุงสมุนไพร :',
+          hintText: 'Input your table name',
+        ),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'กรุณาป้อนข้อมูล';
+          }
+        },
+        onSaved: (value) {
+          Cname = value!.trim();
         },
       ),
     );
