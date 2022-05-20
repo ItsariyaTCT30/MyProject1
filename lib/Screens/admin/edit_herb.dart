@@ -136,6 +136,7 @@ class _EditFoodState extends State<EditFood> {
 */
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: gColor,
@@ -148,73 +149,79 @@ class _EditFoodState extends State<EditFood> {
         ),
         centerTitle: true,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("asset/image/bg1.png"),
-            fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("asset/image/bg1.png"),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: Form(
-          key: formKey,
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Container(
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          ElevatedButton.icon(
-                            onPressed: () => _upload('camera'),
-                            icon: Icon(Icons.camera),
-                            label: Text('Camera'),
-                            style: ElevatedButton.styleFrom(
-                              primary: gColor,
-                            ),
-                          ),
-                          ElevatedButton.icon(
-                            onPressed: () => _upload('gallery'),
-                            icon: Icon(Icons.library_add),
-                            label: Text('Gallery'),
-                            style: ElevatedButton.styleFrom(
-                              primary: gColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      txtName(),
-                      txteName(),
-                      txtdName(),
-                      Center(
-                        child: file == null
-                            ? CircleAvatar(
-                                radius: 60,
-                                backgroundImage: NetworkImage(widget.readURL!),
-                                //backgroundColor: pColor,
-                              )
-                            : CircleAvatar(
-                                radius: 60,
-                                backgroundImage: Image.file(
-                                  file,
-                                  fit: BoxFit.cover,
-                                ).image,
+          child: Form(
+            key: formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  Container(
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            ElevatedButton.icon(
+                              onPressed: () => _upload('camera'),
+                              icon: Icon(Icons.camera),
+                              label: Text('Camera'),
+                              style: ElevatedButton.styleFrom(
+                                primary: gColor,
                               ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      btnSubmit(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
+                            ),
+                            ElevatedButton.icon(
+                              onPressed: () => _upload('gallery'),
+                              icon: Icon(Icons.library_add),
+                              label: Text('Gallery'),
+                              style: ElevatedButton.styleFrom(
+                                primary: gColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                        txtName(),
+                        txteName(),
+                        txtdName(),
+                        Center(
+                          child: file == null
+                              ? CircleAvatar(
+                                  radius: 45,
+                                  backgroundImage:
+                                      NetworkImage(widget.readURL!),
+                                  //backgroundColor: pColor,
+                                )
+                              : CircleAvatar(
+                                  radius: 45,
+                                  backgroundImage: Image.file(
+                                    file,
+                                    fit: BoxFit.cover,
+                                  ).image,
+                                ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        btnSubmit(),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        SizedBox(
+                          height: size.height * 0.27,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

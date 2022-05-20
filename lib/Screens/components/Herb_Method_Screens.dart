@@ -230,7 +230,11 @@ class _MethodScreensState extends State<MethodScreens> {
         style: const TextStyle(fontSize: 18),
       ),
       // your app's logo?
-      image: const FlutterLogo(size: 100),
+      image: Image.asset(
+        "asset/image/2.1.png",
+        height: 250,
+      ),
+      //image: const FlutterLogo(size: 100),
       submitButtonText: 'ส่ง',
       commentHint: 'ข้อเสนอแนะ',
       onCancelled: () => print('cancelled'),

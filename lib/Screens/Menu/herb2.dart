@@ -15,6 +15,7 @@ import 'package:login_logout_app/Screens/Index.dart';
 import 'package:login_logout_app/Screens/Menu/data.dart';
 import 'package:login_logout_app/Screens/Menu/disease.dart';
 import 'package:login_logout_app/Screens/Menu/favorite.dart';
+import 'package:login_logout_app/Screens/Menu/herb.dart';
 import 'package:login_logout_app/Screens/Menu/search.dart';
 import 'package:login_logout_app/Screens/Menu2.dart';
 import 'package:login_logout_app/Screens/admin/backend/admin_data.dart';
@@ -24,14 +25,18 @@ import 'package:login_logout_app/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:path/path.dart' as path;
 
-class Herb extends StatefulWidget {
-  const Herb({Key? key}) : super(key: key);
+class Herb1 extends StatefulWidget {
+  final String ssname;
+  const Herb1({
+    Key? key,
+    required this.ssname,
+  }) : super(key: key);
 
   @override
-  _HerbState createState() => _HerbState();
+  _Herb1State createState() => _Herb1State();
 }
 
-class _HerbState extends State<Herb> {
+class _Herb1State extends State<Herb1> {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
@@ -417,146 +422,168 @@ class _HerbState extends State<Herb> {
                       query: hdbfirebase,
                       itemBuilder: (context, snapshot, animation, index) {
                         return //Control(),
-                            Column(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => DetailsScreens(
-                                      imgURL: snapshot.value['imgURL'],
-                                      name: snapshot.value['tName'],
-                                      ename: snapshot.value['eName'],
-                                      dname: snapshot.value['dName'],
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                  bottomLeft: Radius.circular(50),
-                                ),
-                                child: Container(
-                                  height: 170,
-                                  color: Colors.grey,
-                                  child: Stack(
-                                    children: <Widget>[
-                                      Align(
-                                        child: Image.network(
-                                          ('${snapshot.value['imgURL']}'),
-                                          width: 400,
-                                          fit: BoxFit.fitWidth,
-                                        ),
-                                      ),
-                                      //-------------------------------------------
+                            snapshot.value['tName'] == widget.ssname
+                                ? Column(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) => DetailsScreens(
+                                                imgURL:
+                                                    snapshot.value['imgURL'],
+                                                name: snapshot.value['tName'],
+                                                ename: snapshot.value['eName'],
+                                                dname: snapshot.value['dName'],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(10),
+                                            topRight: Radius.circular(10),
+                                            bottomRight: Radius.circular(10),
+                                            bottomLeft: Radius.circular(50),
+                                          ),
+                                          child: Container(
+                                            height: 170,
+                                            color: Colors.grey,
+                                            child: Stack(
+                                              children: <Widget>[
+                                                Align(
+                                                  child: Image.network(
+                                                    ('${snapshot.value['imgURL']}'),
+                                                    width: 400,
+                                                    fit: BoxFit.fitWidth,
+                                                  ),
+                                                ),
+                                                //-------------------------------------------
 
-                                      //---------------------------------------
-                                      Align(
-                                        alignment: Alignment.topRight,
-                                        child: IconButton(
-                                          icon: Icon(Icons.favorite,
-                                              color: Colors.red),
-                                          iconSize: 30,
-                                          onPressed: () {
-                                            fimgURL = snapshot.value['imgURL'];
-                                            fName = snapshot.value['tName'];
-                                            fEName = snapshot.value['eName'];
-                                            fDName = snapshot.value['dName'];
-                                            fHName = snapshot.value['hName'];
+                                                //---------------------------------------
+                                                Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: IconButton(
+                                                    icon: Icon(Icons.favorite,
+                                                        color: Colors.red),
+                                                    iconSize: 30,
+                                                    onPressed: () {
+                                                      fimgURL = snapshot
+                                                          .value['imgURL'];
+                                                      fName = snapshot
+                                                          .value['tName'];
+                                                      fEName = snapshot
+                                                          .value['eName'];
+                                                      fDName = snapshot
+                                                          .value['dName'];
+                                                      fHName = snapshot
+                                                          .value['hName'];
 
-                                            createData(fimgURL, fName, fEName,
-                                                fDName, fHName);
-                                            print(fimgURL);
-                                            print(fName);
-                                            print(fEName);
-                                            print(fDName);
-                                            print(fHName);
-                                          },
-                                        ),
-                                      ),
-                                      /*Align(
+                                                      createData(
+                                                          fimgURL,
+                                                          fName,
+                                                          fEName,
+                                                          fDName,
+                                                          fHName);
+                                                      print(fimgURL);
+                                                      print(fName);
+                                                      print(fEName);
+                                                      print(fDName);
+                                                      print(fHName);
+                                                    },
+                                                  ),
+                                                ),
+                                                /*Align(
                                         alignment: Alignment.topRight,
                                         child: IconButton(
                                             icon: Icon(Icons.favorite,
                                                 color: Colors.red),
                                             onPressed: null),
                                       ),*/
-                                      //  Container(
-                                      //      width: double.infinity,
-                                      //      color:
-                                      //          Color.fromARGB(100, 22, 44, 33),
-                                      //  margin: EdgeInsets.all(20),
-                                      //  padding: EdgeInsets.all(0),
-                                      /*  child:*/ Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 20, bottom: 15, top: 10),
-                                        child: Align(
-                                          alignment: Alignment.bottomLeft,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              BorderedText(
-                                                strokeWidth: 3.5,
-                                                strokeColor: sColor,
-                                                child: Text(
-                                                  '${snapshot.value['tName']}',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 30,
-                                                    color: Color(0xFF2C3333),
-                                                  ),
-                                                ),
-                                              ),
-                                              Row(
-                                                children: <Widget>[
-                                                  /*  CircleAvatar(
+                                                //  Container(
+                                                //      width: double.infinity,
+                                                //      color:
+                                                //          Color.fromARGB(100, 22, 44, 33),
+                                                //  margin: EdgeInsets.all(20),
+                                                //  padding: EdgeInsets.all(0),
+                                                /*  child:*/ Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 20,
+                                                          bottom: 15,
+                                                          top: 10),
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.bottomLeft,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: <Widget>[
+                                                        BorderedText(
+                                                          strokeWidth: 3.5,
+                                                          strokeColor: sColor,
+                                                          child: Text(
+                                                            '${snapshot.value['tName']}',
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 30,
+                                                              color: Color(
+                                                                  0xFF2C3333),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Row(
+                                                          children: <Widget>[
+                                                            /*  CircleAvatar(
                                                     radius: 10,
                                                     backgroundImage: AssetImage(
                                                         'asset/image/123321.jpg'),
                                                   ),*/
-                                                  Flexible(
-                                                    child: Container(
-                                                      child: Padding(
-                                                        padding:
-                                                            new EdgeInsets.only(
-                                                                right: 13.0),
-                                                        child: Text(
-                                                          '${snapshot.value['eName']}',
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: TextStyle(
-                                                              color: sColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
+                                                            Flexible(
+                                                              child: Container(
+                                                                child: Padding(
+                                                                  padding: new EdgeInsets
+                                                                          .only(
+                                                                      right:
+                                                                          13.0),
+                                                                  child: Text(
+                                                                    '${snapshot.value['eName']}',
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    style: TextStyle(
+                                                                        color:
+                                                                            sColor,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
-                                                      ),
+                                                      ],
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                            ],
+                                                )
+                                                //)
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      )
-                                      //)
+                                      ),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
                                     ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                          ],
-                        );
+                                  )
+                                : Container();
                       },
                     ),
                   ),

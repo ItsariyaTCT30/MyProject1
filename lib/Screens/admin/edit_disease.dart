@@ -254,6 +254,7 @@ class _EditDiseaseState extends State<EditDisease> {
                                             const EdgeInsets.only(left: 8.0),
                                         child: Text(
                                           '${snapshot.value['eName']}',
+                                          overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
