@@ -155,7 +155,7 @@ class _EditDiseaseState extends State<EditDisease> {
       appBar: AppBar(
         backgroundColor: gColor,
         title: Text(
-          "แก้ไขสมุนไพร",
+          "แก้ไขข้อบ่งใช้",
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,

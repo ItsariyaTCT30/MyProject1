@@ -29,7 +29,7 @@ class _SDiseaseState extends State<SDisease> {
         appBar: AppBar(
           backgroundColor: gColor,
           title: Text(
-            "แก้ไขบ่งใช้",
+            "แก้ไขข้อบ่งใช้",
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
