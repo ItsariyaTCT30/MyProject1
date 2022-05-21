@@ -166,7 +166,7 @@ class _SearchPageState extends State<SearchPage> {
                       itemCount: _foundUsers.length,
                       itemBuilder: (context, index) => Card(
                         key: ValueKey(_foundUsers[index]["id"]),
-                        color: Colors.amberAccent,
+                        color: Colors.amberAccent[400],
                         elevation: 4,
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         child: ListTile(
