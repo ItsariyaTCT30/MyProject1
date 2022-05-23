@@ -174,12 +174,12 @@ class _EditDataState extends State<EditData> {
                       Center(
                         child: file == null
                             ? CircleAvatar(
-                                radius: 60,
+                                radius: 45,
                                 backgroundImage: NetworkImage(widget.readURL!),
                                 //backgroundColor: pColor,
                               )
                             : CircleAvatar(
-                                radius: 60,
+                                radius: 45,
                                 backgroundImage: Image.file(
                                   file,
                                   fit: BoxFit.cover,

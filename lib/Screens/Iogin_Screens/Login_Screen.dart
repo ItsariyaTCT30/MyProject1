@@ -245,59 +245,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   color: sColor,
                                 ),
                               ]),
-                          //SizedBox(height: 10),
-                          /*-logingoogle_test-*/ /*LoginSignupButton(
-                              title: 'Sign In Google',
-                              ontapp: () async {
-                                await signIn();
-                              }),
-                              */
-                          //---------------------------------------------------------------------------
-                          /*  ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: sColor,
-                                fixedSize: const Size(290, 43),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50))),
-                            child: Text(
-                              "GO !",
-                              style: TextStyle(
-                                fontSize: 25,
-                                color: gColor,
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (contex) => IndexHome(), //Menu2
-                                ),
-                              );
-                            },
-                          ),*/
-                          //SizedBox(height: 10),
-                          /*  ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: sColor,
-                                fixedSize: const Size(290, 43),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50))),
-                            child: Text(
-                              "Admin !",
-                              style: TextStyle(
-                                fontSize: 25,
-                                color: gColor,
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (contex) => MainMenu(),
-                                ),
-                              );
-                            },
-                          ),*/
                           SizedBox(
-                            height: size.height * 0.03,
+                            height: size.height * 0.06,
                           ),
                           /*--logingoogle---*/ SignInButton(
                             buttonType: ButtonType.google,
@@ -310,23 +259,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: size.height * 0.04,
                           ),
-                          /*  FutureBuilder(
-                            future: Authentication.initializeFirebase(
-                                context: context),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasError) {
-                                return Text('Error initializing Firebase');
-                              } else if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                return GoogleSignInButton();
-                              }
-                              return CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  CustomColors.firebaseOrange,
-                                ),
-                              );
-                            },
-                          ),*/
                         ],
                       ),
                     ),

@@ -51,12 +51,11 @@ class _Menu2State extends State<Menu2> {
             children: <Widget>[
               UserAccountsDrawerHeader(
                 currentAccountPicture: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'https://images.unsplash.com/photo-1485290334039-a3c69043e517?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTYyOTU3NDE0MQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300'),
+                  backgroundImage: AssetImage("asset/image/123321.jpg"),
                 ),
-                accountEmail: Text('jane.doe@example.com'),
+                accountEmail: Text('itsariya175@gmail.com'),
                 accountName: Text(
-                  'Jane Doe',
+                  'Itsariya Narong',
                   style: TextStyle(fontSize: 24.0),
                 ),
                 decoration: BoxDecoration(

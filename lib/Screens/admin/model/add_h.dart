@@ -63,7 +63,11 @@ class _AddHState extends State<AddH> {
                 ),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (contex) => MainMenu(),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -466,7 +470,7 @@ class _AddHState extends State<AddH> {
                     ),
                   ),
                   SizedBox(
-                    height: size.height * 0.04,
+                    height: 110,
                   ),
                 ],
               ),

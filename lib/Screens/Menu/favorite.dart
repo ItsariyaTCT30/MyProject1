@@ -1,10 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:login_logout_app/Screens/Herb_Control.dart';
+import 'package:login_logout_app/Screens/Index.dart';
+import 'package:login_logout_app/Screens/Menu/data.dart';
+import 'package:login_logout_app/Screens/Menu/herb.dart';
 import 'package:login_logout_app/Screens/Menu2.dart';
 import 'package:login_logout_app/Screens/components/Herb_Details_Screens.dart';
+import 'package:login_logout_app/Screens/index_home.dart';
 
 import '../../constants.dart';
 
@@ -16,6 +22,18 @@ class favorite extends StatefulWidget {
 }
 
 class _favoriteState extends State<favorite> {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+
+  String email = 'lemail';
+  String password = 'lpassword';
+  bool isloading = false;
+
+  _signOut() async {
+    await _firebaseAuth.signOut();
+  }
+
   final fdbfirebase = FirebaseDatabase.instance.reference().child('favorite');
 
   Future<void> _delete(String ref) async {
@@ -66,7 +84,139 @@ class _favoriteState extends State<favorite> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: AssetImage("asset/image/123321.jpg"),
+              ),
+              accountEmail: Text('itsariya175@gmail.com'),
+              accountName: Text(
+                'Itsariya Narong',
+                style: TextStyle(fontSize: 24.0),
+              ),
+              decoration: BoxDecoration(
+                color: gColor,
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home_rounded, size: 32, color: gColor),
+              title: Text(
+                'หน้าหลัก',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (contex) => IndexHome(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: ImageIcon(
+                  AssetImage("asset/image/herbal-spa-treatment-leaves.png"),
+                  size: 32,
+                  color: gColor),
+              title: Text(
+                'สมุนไพร',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (contex) => Herb(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.sick, size: 32, color: gColor),
+              title: Text(
+                'ข้อบ่งใช้',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (contex) => Menu2(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.insert_drive_file_rounded,
+                  size: 32, color: gColor),
+              title: Text(
+                'คลังข้อมูล',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (contex) => Data(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.favorite, size: 32, color: gColor),
+              title: Text(
+                'สิ่งที่ฉันถูกใจ',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (contex) => favorite(),
+                  ),
+                );
+              },
+            ),
+            SizedBox(
+              height: size.height * 0.15,
+            ),
+            Container(
+              height: 1,
+              width: 1,
+              color: ttColor,
+            ),
+            ListTile(
+              leading: Icon(Icons.logout, size: 32, color: gColor),
+              title: Text(
+                'ออกจากจากระบบ',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              onTap: () async {
+                await _signOut();
+                if (_firebaseAuth.currentUser == null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Index()),
+                  );
+                }
+              },
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         /*  actions: <Widget>[
           IconButton(

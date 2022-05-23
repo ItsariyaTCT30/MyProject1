@@ -66,7 +66,11 @@ class _EditHState extends State<EditH> {
                 ),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (contex) => MainMenu(),
+                  ),
+                );
               },
             ),
             ListTile(
@@ -467,6 +471,9 @@ class _EditHState extends State<EditH> {
                         ),
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 110,
                   ),
                 ],
               ),
