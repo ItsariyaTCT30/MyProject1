@@ -176,7 +176,7 @@ class _AddDataState extends State<AddData> {
         child: Form(
           key: formKey,
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
             child: Column(
               children: [
                 Container(
@@ -202,7 +202,7 @@ class _AddDataState extends State<AddData> {
                         child: file == null
                             ? Text('ไม่มีรูปภาพ')
                             : CircleAvatar(
-                                radius: 50,
+                                radius: 45,
                                 backgroundImage: Image.file(
                                   file,
                                   fit: BoxFit.cover,

@@ -37,6 +37,7 @@ class _DataState extends State<Data> {
 
   _signOut() async {
     await _firebaseAuth.signOut();
+    await _googleSignIn.signOut();
   }
 
   List<MenuRecom> menuRecom = getMenuRecomList();

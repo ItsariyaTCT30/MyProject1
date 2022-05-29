@@ -198,7 +198,7 @@ class _AddDiseaseState extends State<AddDisease> {
         child: Form(
           key: formKey,
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
             child: Column(
               children: [
                 Container(

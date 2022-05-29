@@ -21,6 +21,7 @@ class IndexHome extends StatelessWidget {
 
   _signOut() async {
     await _firebaseAuth.signOut();
+    await _googleSignIn.signOut();
   }
 
   var ct;
@@ -156,7 +157,7 @@ class IndexHome extends StatelessWidget {
               ),
               onTap: () async {
                 await _signOut();
-                if (_firebaseAuth.currentUser == null) {
+                {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Index()),

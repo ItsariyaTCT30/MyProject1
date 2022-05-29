@@ -32,6 +32,7 @@ class _favoriteState extends State<favorite> {
 
   _signOut() async {
     await _firebaseAuth.signOut();
+    await _googleSignIn.signOut();
   }
 
   final fdbfirebase = FirebaseDatabase.instance.reference().child('favorite');

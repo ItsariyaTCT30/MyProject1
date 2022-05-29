@@ -36,6 +36,7 @@ class _Menu2State extends State<Menu2> {
 
   _signOut() async {
     await _firebaseAuth.signOut();
+    await _googleSignIn.signOut();
   }
 
   @override

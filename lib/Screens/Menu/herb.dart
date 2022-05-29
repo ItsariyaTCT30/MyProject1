@@ -44,6 +44,7 @@ class _HerbState extends State<Herb> {
 
   _signOut() async {
     await _firebaseAuth.signOut();
+    await _googleSignIn.signOut();
   }
 
   FirebaseStorage storage = FirebaseStorage.instance;
