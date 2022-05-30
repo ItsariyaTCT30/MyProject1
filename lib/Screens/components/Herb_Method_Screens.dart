@@ -106,47 +106,6 @@ class _MethodScreensState extends State<MethodScreens> {
     }
   }
 
-  //-------------------------------------------------------------------------------
-/*
-  Future<void> orderN() async {
-    var db = FirebaseDatabase.instance.reference().child("comment");
-    db.once().then((DataSnapshot snapshot) async {
-      Map<dynamic, dynamic> values = snapshot.value;
-      //print(values.toString());
-      values.forEach((k, v) async {
-        print(k);
-        //print(v["amonth"]);
-        if (v["amonth"] > 0) {
-          await FirebaseDatabase.instance
-              .reference()
-              .child('Order')
-              // .child(widget.tableName)
-              .push()
-              .set({
-            //  'tableN': widget.tableName,
-            'sName': v["sName"],
-            'oName': v["oName"],
-          }).then((value) {
-            print("Update Success");
-            sdbfirebase.child(k).update({
-              'amonth': 0,
-            }).then((value) {
-              print('Success');
-            }).catchError((onError) {
-              print(onError.code);
-              print(onError.message);
-            });
-          }).catchError((onError) {
-            print(onError.code);
-            print(onError.message);
-          });
-          //
-        }
-      });
-      //  await _order(widget.tableName);
-    });
-  }*/
-  //-------------------------------------------------------------------------------
   final hdbfirebase = FirebaseDatabase.instance.reference().child('Food');
 
   Future<void> orderN() async {
@@ -325,8 +284,7 @@ class _MethodScreensState extends State<MethodScreens> {
               ),
               SizedBox(height: 10.0),
               Text(
-                widget
-                    .Cname, //"รูปแบบยา ยาต้ม, ยาแคปซูล\nขนาดและวิธีใช้ \nยาต้ม\nต้มเดือด น้ำหนักยา สิ่งละ ๑-๕ บาท (๑๕-๗๕ กรัม) ตามอาการคนไข้ รับประทาน\nครั้งละ ๑ ถ้วยชา (๑๓๕ มิลลิลิตร) วันละ ๒-๓ ครั้ง ก่อนอาหาร\nชนิดแคปซูล\nรับประทานครั้งละ ๐.๕ กรัม วันละ ๓ ครั้ง ก่อนอาหาร",
+                widget.Cname,
                 style: TextStyle(
                   fontSize: 15.0,
                   color: Colors.grey,
@@ -334,45 +292,6 @@ class _MethodScreensState extends State<MethodScreens> {
                 ),
               ),
               SizedBox(height: 20.0),
-              /* ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  primary: gColor,
-                  fixedSize: const Size(50, 50),
-                  shape: StadiumBorder(),
-                ),
-                icon: Icon(
-                  Icons.comment,
-                  color: sColor,
-                  size: 20,
-                ),
-                label: Text(
-                  '',
-                  style: TextStyle(fontSize: 18, color: sColor),
-                ),
-                onPressed: _showRatingDialog,
-              ),*/
-              /*  ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    primary: gColor,
-                    fixedSize: const Size(50, 50),
-                    shape: StadiumBorder(),
-                  ),
-                  icon: Icon(
-                    Icons.comment,
-                    color: sColor,
-                    size: 20,
-                  ),
-                  label: Text(
-                    '',
-                    style: TextStyle(fontSize: 18, color: sColor),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (contex) => MyApp(),
-                      ),
-                    );
-                  }),*/
 
               SizedBox(height: 10.0),
               //buildProductList(),

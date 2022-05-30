@@ -71,7 +71,7 @@ class _DetailsScreensState extends State<DetailsScreens> {
               ),
               SizedBox(height: 10.0),
               Text(
-                widget.ename, //"Cannabis sativa subsp. indica (Lam.)",
+                widget.ename,
                 style: TextStyle(
                   fontSize: 27.0,
                   fontWeight: FontWeight.w600,
@@ -87,8 +87,7 @@ class _DetailsScreensState extends State<DetailsScreens> {
               ),
               SizedBox(height: 10.0),
               Text(
-                widget
-                    .dname, //"เป็นพืชดั้งเดิมที่มีอยู่มากในทั่วโลกซึ่งขึ้นอยู่ในเขตอบอุ่นของทวีปเอเชียและยูโรป จากการสันนิษฐานว่ามีการกระจายพันธุ์เป็นบริเวณกว้างอยู่ทางตอนกลางของทวีป ตั้งแต่ทะเลสาบแคสเปียนจนถึงทางตอนใต้ของเทือกเขาหิมาลัยและทางตะวันตกของไซบีเรีย เป็นพืชที่ได้รับการบันทึกไว้ในเอกสารเก่าโบราณหลายเล่มว่ามีการปลูกเพื่อใช้ประโยชน์เป็นพืชเส้นใยและปลูกเป็นพืชเสพติดมาแต่ดึกดำบรรพ์ ในประเทศจีนมีการใช้เส้นใยเพื่อถักทอมาตั้งแต่ 5,000-4,000 ปีก่อนคริสตกาล ต่อมาในศตวรรษแรก จึงมีการพัฒนาการใช้ประโยชน์จากเส้นใยมาทำกระดาษ ในประเทศยุโรป มีการใช้ประโยชน์จากพืชกัญชามาตั้งแต่ 700 ปีก่อนคริสตศักราช ส่วนใหญ่ใช้ทำเป็นเชือกเพื่อการล่าสัตว์ ในช่วงศตวรรษที่ 14 ถึงศตวรรษที่ 15 ในประเทศอิตาลีมีการปลูกพืชกัญชากันมากเพื่อนำเส้นใยมาทำเชือกใช้ในเรือเดินทะเลเนื่องจากมีความเหนียวและทน นอกจากนี้ พบว่า มีการปลูกพืชกัญชากระจายไปทั้งในอเมริกาเหนือและอเมริกาใต้อีกด้วย",
+                widget.dname,
                 style: TextStyle(
                   fontSize: 15.0,
                   color: Colors.grey,
@@ -108,50 +107,6 @@ class _DetailsScreensState extends State<DetailsScreens> {
     );
   }
 
-/*
-  buildFloatingButton() {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: Padding(
-        padding: EdgeInsets.only(right: 20.0),
-        child: Container(
-          height: 60.0,
-          width: 60.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Theme.of(context).accentColor,
-            boxShadow: [
-              BoxShadow(
-                //color: Colors.orange[200],
-                offset: Offset(0.0, 10.0),
-                blurRadius: 10,
-              ),
-            ],
-          ),
-          child: IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (contex) => DetailsScreensDS(),
-                  ),
-                );
-              },
-              icon: Icon(
-                Icons.favorite,
-              )),
-          /*child: Center(
-            child: Icon(
-              Feather.plus,
-              color: Colors.white,
-              size: 25.0,
-            ),
-          ),
-        ),*/
-        ),
-      ),
-    );
-  }
-*/
   buildImage() {
     return Container(
       height: 240.0,
@@ -172,41 +127,3 @@ class _DetailsScreensState extends State<DetailsScreens> {
     );
   }
 }
-/*
-class ProductItem extends StatelessWidget {
-  final Map furniture;
-
-  ProductItem(this.furniture);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: 20),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return Details();
-              },
-            ),
-          );
-        },
-        child: Container(
-          height: 140,
-          width: 140,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Image.asset(
-              "${furniture["img"]}",
-              height: 140,
-              width: 140,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-*/

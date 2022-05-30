@@ -209,59 +209,27 @@ class _Menu2State extends State<Menu2> {
             tabs: [
               Tab(
                 child: Text('ระบบไหลเวียนโลหิต'),
-                /* icon: ImageIcon(
-                  AssetImage("asset/image/blood-bag.png"),
-                  color: sColor,
-                ),*/
               ),
               Tab(
                 child: Text('ระบบทางเดินอาหาร'),
-                /*  icon: ImageIcon(
-                  AssetImage("asset/image/herbal-spa-treatment-leaves.png"),
-                  color: sColor,
-                ),*/
               ),
               Tab(
                 child: Text('แก้ไข้'),
-                /* icon: ImageIcon(
-                  AssetImage("asset/image/herbal-spa-treatment-leaves.png"),
-                  color: sColor,
-                ),*/
               ),
               Tab(
                 child: Text('โรคติดต่อ'),
-                /*  icon: ImageIcon(
-                  AssetImage("asset/image/herbal-spa-treatment-leaves.png"),
-                  color: sColor,
-                ),*/
               ),
               Tab(
                 child: Text('อาการทางกล้ามเนื้อ'),
-                /*   icon: ImageIcon(
-                  AssetImage("asset/image/herbal-spa-treatment-leaves.png"),
-                  color: sColor,
-                ),*/
               ),
               Tab(
                 child: Text('ฟัน'),
-                /*   icon: ImageIcon(
-                  AssetImage("asset/image/herbal-spa-treatment-leaves.png"),
-                  color: sColor,
-                ),*/
               ),
               Tab(
                 child: Text('แก้พิษ'),
-                /*  icon: ImageIcon(
-                  AssetImage("asset/image/herbal-spa-treatment-leaves.png"),
-                  color: sColor,
-                ),*/
               ),
               Tab(
                 child: Text('อาการทางผิวหนัง'),
-                /*   icon: ImageIcon(
-                  AssetImage("asset/image/herbal-spa-treatment-leaves.png"),
-                  color: sColor,
-                ),*/
               ),
             ],
           ),
@@ -276,15 +244,6 @@ class _Menu2State extends State<Menu2> {
             Center(child: Tooth()),
             Center(child: Venom()),
             Center(child: Health()),
-            //----------------------------------------------
-            /*    Container(
-              height: MediaQuery.of(context).size.height / 1,
-              child: ListView(
-                children: <Widget>[
-                  ProductCard(),
-                ],
-              ),
-            ),*/
           ],
         ),
       ),

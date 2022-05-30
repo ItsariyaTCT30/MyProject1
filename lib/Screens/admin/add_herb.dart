@@ -252,24 +252,6 @@ class _AddFoodState extends State<AddFood> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              /*    trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    icon: Icon(Icons.favorite_border),
-                                    onPressed: () {
-                                      FirebaseAuth auth = FirebaseAuth.instance;
-                                      auth.currentUser().then((value){
-                                      DatabaseReference dbfirebase = FirebaseDatabase.instance.reference().child("Food").child(uploadId).child("Fav")
-                                      .child(value.uid).child("state");
-                                      dbfirebase.set("true");
-                                      });
-                                      
-
-                                    },
-                                  ),
-                                ],
-                              ),*/
                               subtitle: Row(
                                 children: <Widget>[
                                   Flexible(
@@ -296,79 +278,6 @@ class _AddFoodState extends State<AddFood> {
                           ),
                         ),
                       );
-                      //---------------------------------
-/*
-                          ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(50),
-                        ),
-                        child: Container(
-                          height: 170,
-                          color: Colors.grey,
-                          child: Stack(
-                            children: <Widget>[
-                              Align(
-                                child: Image.network(
-                                  ('${snapshot.value['imgURL']}'),
-                                  width: 400,
-                                  fit: BoxFit.fitWidth,
-                                ),
-                              ),
-                              /*  Align(
-                                  alignment: Alignment.topLeft,
-                                  child: IconButton(
-                                      icon: Icon(Icons.favorite_border,
-                                          color: sColor),
-                                      onPressed: null),
-                                ),*/
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 20, bottom: 15, top: 10),
-                                child: Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        '${snapshot.value['tName']}',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 30,
-                                            color: sColor),
-                                      ),
-                                      Row(
-                                        children: <Widget>[
-                                          /*      CircleAvatar(
-                                              radius: 10,
-                                              backgroundImage: AssetImage(
-                                                  'asset/image/123321.jpg'),
-                                            ),*/
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.0),
-                                            child: Text(
-                                              'Ocimum tenuiflorum',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  color: sColor),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      );*/
-                      //---------------------------------
                     },
                   ),
                 ),

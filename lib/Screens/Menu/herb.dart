@@ -381,33 +381,6 @@ class _HerbState extends State<Herb> {
                   SizedBox(
                     height: 25,
                   ),
-                  /*  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xffffffff).withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Container(
-                          width: 200,
-                          padding: EdgeInsets.only(left: 20),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                                hintStyle: TextStyle(color: Colors.white),
-                                hintText: 'Search',
-                                border: InputBorder.none),
-                          ),
-                        ),
-                        IconButton(
-                            icon: Icon(
-                              Icons.search,
-                              color: Colors.white,
-                            ),
-                            onPressed: null),
-                      ],
-                    ),
-                  ),*/
                   SizedBox(
                     height: 25,
                   ),
@@ -478,20 +451,7 @@ class _HerbState extends State<Herb> {
                                           },
                                         ),
                                       ),
-                                      /*Align(
-                                        alignment: Alignment.topRight,
-                                        child: IconButton(
-                                            icon: Icon(Icons.favorite,
-                                                color: Colors.red),
-                                            onPressed: null),
-                                      ),*/
-                                      //  Container(
-                                      //      width: double.infinity,
-                                      //      color:
-                                      //          Color.fromARGB(100, 22, 44, 33),
-                                      //  margin: EdgeInsets.all(20),
-                                      //  padding: EdgeInsets.all(0),
-                                      /*  child:*/ Padding(
+                                      Padding(
                                         padding: const EdgeInsets.only(
                                             left: 20, bottom: 15, top: 10),
                                         child: Align(
@@ -569,38 +529,3 @@ class _HerbState extends State<Herb> {
     );
   }
 }
-/*
-// Search Page
-class SearchPage extends StatelessWidget {
-  const SearchPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          backgroundColor: gColor,
-          // The search area here
-          title: Container(
-            width: double.infinity,
-            height: 40,
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(5)),
-            child: Center(
-              child: TextField(
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.clear),
-                      onPressed: () {
-                        /* Clear the search field */
-                      },
-                    ),
-                    hintText: 'Search...',
-                    border: InputBorder.none),
-              ),
-            ),
-          )),
-    );
-  }
-}
-*/
